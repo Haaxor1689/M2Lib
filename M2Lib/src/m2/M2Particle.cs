@@ -24,8 +24,8 @@ namespace M2Lib.m2
             get { return _childEmitterFileName.ToNameString(); }
             set { _childEmitterFileName.SetString(value); }
         }
-        private readonly M2Array<byte> _modelFileName = new M2Array<byte>(); 
-        private readonly M2Array<byte> _childEmitterFileName = new M2Array<byte>(); 
+        private readonly M2Array<byte> _modelFileName = new M2Array<byte>();
+        private readonly M2Array<byte> _childEmitterFileName = new M2Array<byte>();
 
         public byte BlendingType { get; set; }
         public byte EmitterType { get; set; }
@@ -93,8 +93,8 @@ namespace M2Lib.m2
             }
             else
             {
-                BlendingType = (byte) stream.ReadUInt16();
-                EmitterType = (byte) stream.ReadUInt16();
+                BlendingType = (byte)stream.ReadUInt16();
+                EmitterType = (byte)stream.ReadUInt16();
             }
             if (version >= M2.Format.Cataclysm)
             {
@@ -115,7 +115,7 @@ namespace M2Lib.m2
             HorizontalRange.Load(stream, version);
             Gravity.Load(stream, version);
             Lifespan.Load(stream, version);
-            if(version >= M2.Format.LichKing) LifespanVary = stream.ReadSingle();
+            if (version >= M2.Format.LichKing) LifespanVary = stream.ReadSingle();
             EmissionRate.Load(stream, version);
             if (version >= M2.Format.LichKing) EmissionRateVary = stream.ReadSingle();
             EmissionAreaLength.Load(stream, version);
@@ -133,40 +133,40 @@ namespace M2Lib.m2
             else
             {
                 var midPoint = stream.ReadSingle();
-                var colorTrack = new []{stream.ReadCArgb(), stream.ReadCArgb(), stream.ReadCArgb()};
-                var scaleTrack = new []{stream.ReadSingle(), stream.ReadSingle(), stream.ReadSingle()};
-                var headCellTrack1 = new [] {stream.ReadUInt16(), stream.ReadUInt16()};
+                var colorTrack = new[] { stream.ReadCArgb(), stream.ReadCArgb(), stream.ReadCArgb() };
+                var scaleTrack = new[] { stream.ReadSingle(), stream.ReadSingle(), stream.ReadSingle() };
+                var headCellTrack1 = new[] { stream.ReadUInt16(), stream.ReadUInt16() };
                 stream.ReadInt16();//Always 1
-                var headCellTrack2 = new [] {stream.ReadUInt16(), stream.ReadUInt16()};
+                var headCellTrack2 = new[] { stream.ReadUInt16(), stream.ReadUInt16() };
                 stream.ReadInt16();//Always 1
                 for (var i = 0; i < LegacyTiles.Length; i++)
                     LegacyTiles[i] = stream.ReadInt16(); //TODO 4 tailCellTrack ?
                 ColorTrack.Timestamps.Add(0);
                 ColorTrack.Values.Add(new C3Vector(colorTrack[0].B, colorTrack[0].G, colorTrack[0].R));
-                ColorTrack.Timestamps.Add((short) (midPoint*short.MaxValue));
+                ColorTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
                 ColorTrack.Values.Add(new C3Vector(colorTrack[1].B, colorTrack[1].G, colorTrack[1].R));
                 ColorTrack.Timestamps.Add(short.MaxValue);
                 ColorTrack.Values.Add(new C3Vector(colorTrack[2].B, colorTrack[2].G, colorTrack[2].R));
 
                 AlphaTrack.Timestamps.Add(0);
                 AlphaTrack.Values.Add(new FixedPoint_0_15((short)(128 * colorTrack[0].A)));
-                AlphaTrack.Timestamps.Add((short) (midPoint*short.MaxValue));
+                AlphaTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
                 AlphaTrack.Values.Add(new FixedPoint_0_15((short)(128 * colorTrack[1].A)));
                 AlphaTrack.Timestamps.Add(short.MaxValue);
                 AlphaTrack.Values.Add(new FixedPoint_0_15((short)(128 * colorTrack[2].A)));
 
                 ScaleTrack.Timestamps.Add(0);
                 ScaleTrack.Values.Add(new C2Vector(scaleTrack[0], 0));
-                ScaleTrack.Timestamps.Add((short) (midPoint*short.MaxValue));
+                ScaleTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
                 ScaleTrack.Values.Add(new C2Vector(scaleTrack[1], 0));
                 ScaleTrack.Timestamps.Add(short.MaxValue);
                 ScaleTrack.Values.Add(new C2Vector(scaleTrack[2], 0));
 
                 HeadCellTrack.Timestamps.Add(0);
                 HeadCellTrack.Values.Add(headCellTrack1[0]);
-                HeadCellTrack.Timestamps.Add((short) (midPoint*short.MaxValue));
+                HeadCellTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
                 HeadCellTrack.Values.Add(headCellTrack1[1]);
-                HeadCellTrack.Timestamps.Add((short) (midPoint*short.MaxValue));
+                HeadCellTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
                 HeadCellTrack.Values.Add(headCellTrack2[0]);
                 HeadCellTrack.Timestamps.Add(short.MaxValue);
                 HeadCellTrack.Values.Add(headCellTrack2[1]);
@@ -207,7 +207,7 @@ namespace M2Lib.m2
         public void Save(BinaryWriter stream, M2.Format version)
         {
             stream.Write(Unknown);
-            if(version < M2.Format.LichKing) stream.Write(Flags & 0xFFFF);
+            if (version < M2.Format.LichKing) stream.Write(Flags & 0xFFFF);
             else stream.Write(Flags);
             stream.Write(Position);
             stream.Write(Bone);
@@ -222,8 +222,8 @@ namespace M2Lib.m2
             }
             else
             {
-                stream.Write((ushort) BlendingType);
-                stream.Write((ushort) EmitterType);
+                stream.Write((ushort)BlendingType);
+                stream.Write((ushort)EmitterType);
             }
             if (version >= M2.Format.Cataclysm)
             {
@@ -269,12 +269,12 @@ namespace M2Lib.m2
 
                 if (ColorTrack.Values.Count >= 3)
                 {
-                    midPoint = (float) ColorTrack.Timestamps[1] / short.MaxValue;
+                    midPoint = (float)ColorTrack.Timestamps[1] / short.MaxValue;
                     for (var i = 0; i < colorTrack.Length; i++)
                     {
                         var color = ColorTrack.Values[i];
                         var alpha = AlphaTrack.Values.Count >= 3 ? AlphaTrack.Values[i] : new FixedPoint_0_15(short.MaxValue);
-                        colorTrack[i] = new CArgb((byte) color.Z, (byte) color.Y, (byte) color.X, (byte) (alpha.ToShort()/128));
+                        colorTrack[i] = new CArgb((byte)color.Z, (byte)color.Y, (byte)color.X, (byte)(alpha.ToShort() / 128));
                     }
                 }
                 if (HeadCellTrack.Values.Count >= 4)
@@ -293,10 +293,10 @@ namespace M2Lib.m2
                     stream.Write(scaleTrack[i]);
                 for (var i = 0; i < headCellTrack1.Length; i++)
                     stream.Write(headCellTrack1[i]);
-                stream.Write((short) 1);
+                stream.Write((short)1);
                 for (var i = 0; i < headCellTrack2.Length; i++)
                     stream.Write(headCellTrack2[i]);
-                stream.Write((short) 1);
+                stream.Write((short)1);
                 for (var i = 0; i < LegacyTiles.Length; i++)
                     stream.Write(LegacyTiles[i]);
             }

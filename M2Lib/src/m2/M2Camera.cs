@@ -28,11 +28,11 @@ namespace M2Lib.m2
 
         public void Load(BinaryReader stream, M2.Format version)
         {
-            Type = (CameraType) stream.ReadInt32();
-            if (version < (M2.Format) 271)
+            Type = (CameraType)stream.ReadInt32();
+            if (version < (M2.Format)271)
             {
-                FieldOfView.Timestamps.Add(new M2Array<uint> {0});
-                FieldOfView.Values.Add(new M2Array<C3Vector> {new C3Vector(stream.ReadSingle(), 0, 0)});
+                FieldOfView.Timestamps.Add(new M2Array<uint> { 0 });
+                FieldOfView.Values.Add(new M2Array<C3Vector> { new C3Vector(stream.ReadSingle(), 0, 0) });
             }
             FarClip = stream.ReadSingle();
             NearClip = stream.ReadSingle();
@@ -41,12 +41,12 @@ namespace M2Lib.m2
             TargetPositions.Load(stream, version);
             TargetPositionBase = stream.ReadC3Vector();
             Roll.Load(stream, version);
-            if (version >= (M2.Format) 271) FieldOfView.Load(stream, version);
+            if (version >= (M2.Format)271) FieldOfView.Load(stream, version);
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
         {
-            stream.Write((int) Type);
+            stream.Write((int)Type);
             if (version < (M2.Format)271)
             {
                 if (FieldOfView.Values.Count == 1) stream.Write(FieldOfView.Values[0][0].X);
@@ -95,7 +95,7 @@ namespace M2Lib.m2
         {
             var lookup = new M2Array<short>();
             if (cameras.Count == 0) return lookup;
-            var maxId = (short) cameras.Max(x => x.Type);
+            var maxId = (short)cameras.Max(x => x.Type);
             if (maxId == -1)
             {
                 lookup.Add(-1);
@@ -104,7 +104,7 @@ namespace M2Lib.m2
             for (short i = 0; i <= maxId; i++) lookup.Add(-1);
             for (short i = 0; i < cameras.Count; i++)
             {
-                var id = (short) cameras[i].Type;
+                var id = (short)cameras[i].Type;
                 if (id >= 0 && lookup[id] == -1) lookup[id] = i;
             }
             return lookup;

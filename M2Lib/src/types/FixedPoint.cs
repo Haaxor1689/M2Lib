@@ -12,7 +12,7 @@ namespace M2Lib.types
 
         public FixedPoint_0_15(short p1)
         {
-            _bits = new BitArray(BitConverter.GetBytes(p1));
+            _bits = new BitArray(BitConverter.GetBytes((short)p1));
         }
 
         public FixedPoint_0_15(BitArray bits)
@@ -31,7 +31,7 @@ namespace M2Lib.types
 
         public FixedPoint_6_9(short p1)
         {
-            _bits = new BitArray(BitConverter.GetBytes(p1));
+            _bits = new BitArray(BitConverter.GetBytes((short)p1));
         }
 
         public FixedPoint_6_9(BitArray bits)
@@ -50,7 +50,7 @@ namespace M2Lib.types
 
         public FixedPoint_2_5(byte p1)
         {
-            _bits = new BitArray(BitConverter.GetBytes(p1));
+            _bits = new BitArray(BitConverter.GetBytes((short)p1));
         }
 
         public FixedPoint_2_5(BitArray bits)
@@ -69,7 +69,7 @@ namespace M2Lib.types
             var decimalPart = bits.GetRange(0, decimalBits).ToInt();
             var integerPart = bits.GetRange(decimalBits, decimalBits + integerBits).ToInt();
             var sign = bits[decimalBits + integerBits + signBits - 1];
-            return (sign ? -1.0f : 1.0f)*(integerPart + decimalPart/(float) (1 << decimalBits));
+            return (sign ? -1.0f : 1.0f) * (integerPart + decimalPart / (float)(1 << decimalBits));
         }
 
         public static short ToShort(this BitArray bits)
@@ -83,7 +83,7 @@ namespace M2Lib.types
                 }
             }
             result &= short.MaxValue;
-            return (short) result;
+            return (short)result;
         }
 
         public static byte ToByte(this BitArray bits)
@@ -97,7 +97,7 @@ namespace M2Lib.types
                 }
             }
             result &= byte.MaxValue;
-            return (byte) result;
+            return (byte)result;
         }
 
         public static int ToInt(this BitArray bits)

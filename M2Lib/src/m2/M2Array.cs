@@ -39,66 +39,66 @@ namespace M2Lib.m2
             if (_n == 0) return;
 
             stream.BaseStream.Seek(StoredOffset, SeekOrigin.Begin);
-            if (typeof (IAnimated).IsAssignableFrom(typeof (T)))
+            if (typeof(IAnimated).IsAssignableFrom(typeof(T)))
             {
                 for (var i = 0; i < _n; i++)
                 {
                     Add(new T());
-                    ((IAnimated) this[i]).SetSequences(_sequencesBackRef);
-                    ((IMarshalable) this[i]).Load(stream, version);
+                    ((IAnimated)this[i]).SetSequences(_sequencesBackRef);
+                    ((IMarshalable)this[i]).Load(stream, version);
                 }
             }
-            else if (typeof (IMarshalable).IsAssignableFrom(typeof (T)))
+            else if (typeof(IMarshalable).IsAssignableFrom(typeof(T)))
             {
                 for (var i = 0; i < _n; i++)
                 {
                     Add(new T());
-                    ((IMarshalable) this[i]).Load(stream, version);
+                    ((IMarshalable)this[i]).Load(stream, version);
                 }
             }
             else
             {
                 for (var i = 0; i < _n; i++)
                 {
-                    Debug.Assert(StreamExtensions.ReadFunctions.ContainsKey(typeof (T)), "Can't read " + typeof (T));
-                    Add((T) StreamExtensions.ReadFunctions[typeof (T)](stream));
+                    Debug.Assert(StreamExtensions.ReadFunctions.ContainsKey(typeof(T)), "Can't read " + typeof(T));
+                    Add((T)StreamExtensions.ReadFunctions[typeof(T)](stream));
                 }
             }
-            if (!typeof (IReferencer).IsAssignableFrom(typeof (T))) return;
+            if (!typeof(IReferencer).IsAssignableFrom(typeof(T))) return;
 
             for (var i = 0; i < _n; i++)
-                ((IReferencer) this[i]).LoadContent(stream, version);
+                ((IReferencer)this[i]).LoadContent(stream, version);
         }
 
         public void SaveContent(BinaryWriter stream, M2.Format version = M2.Format.Useless)
         {
             if (Count == 0) return;
-            StoredOffset = (uint) stream.BaseStream.Position;
-            if (typeof (IAnimated).IsAssignableFrom(typeof (T)))
+            StoredOffset = (uint)stream.BaseStream.Position;
+            if (typeof(IAnimated).IsAssignableFrom(typeof(T)))
             {
                 for (var i = 0; i < Count; i++)
                 {
-                    ((IAnimated) this[i]).SetSequences(_sequencesBackRef);
-                    ((IMarshalable) this[i]).Save(stream, version);
+                    ((IAnimated)this[i]).SetSequences(_sequencesBackRef);
+                    ((IMarshalable)this[i]).Save(stream, version);
                 }
             }
-            else if (typeof (IMarshalable).IsAssignableFrom(typeof (T)))
+            else if (typeof(IMarshalable).IsAssignableFrom(typeof(T)))
             {
                 for (var i = 0; i < Count; i++)
-                    ((IMarshalable) this[i]).Save(stream, version);
+                    ((IMarshalable)this[i]).Save(stream, version);
             }
             else
             {
                 for (var i = 0; i < Count; i++)
                 {
-                    Debug.Assert(StreamExtensions.WriteFunctions.ContainsKey(typeof (T)), "Can't write " + typeof (T));
-                    StreamExtensions.WriteFunctions[typeof (T)](stream, this[i]);
+                    Debug.Assert(StreamExtensions.WriteFunctions.ContainsKey(typeof(T)), "Can't write " + typeof(T));
+                    StreamExtensions.WriteFunctions[typeof(T)](stream, this[i]);
                 }
             }
-            if (typeof (IReferencer).IsAssignableFrom(typeof (T)))
+            if (typeof(IReferencer).IsAssignableFrom(typeof(T)))
             {
                 for (var i = 0; i < Count; i++)
-                    ((IReferencer) this[i]).SaveContent(stream, version);
+                    ((IReferencer)this[i]).SaveContent(stream, version);
             }
             RewriteHeader(stream, version);
         }
@@ -110,15 +110,15 @@ namespace M2Lib.m2
         /// <param name="sequences"></param>
         public void PassSequences(IReadOnlyList<M2Sequence> sequences)
         {
-            Debug.Assert(typeof (IAnimated).IsAssignableFrom(typeof (T)),
-                "M2Array<" + typeof (T) + "> while T does not implement IAnimated");
+            Debug.Assert(typeof(IAnimated).IsAssignableFrom(typeof(T)),
+                "M2Array<" + typeof(T) + "> while T does not implement IAnimated");
             _sequencesBackRef = sequences;
         }
 
         public void RewriteHeader(BinaryWriter stream, M2.Format version)
         {
             Debug.Assert(_startOffset > -1, "M2Array not saved before saving referenced content.");
-            var currentOffset = (uint) stream.BaseStream.Position;
+            var currentOffset = (uint)stream.BaseStream.Position;
             stream.BaseStream.Seek(_startOffset, SeekOrigin.Begin);
             Save(stream, version);
             stream.BaseStream.Seek(currentOffset, SeekOrigin.Begin);
@@ -132,7 +132,7 @@ namespace M2Lib.m2
             result.Append("\r\n");
             for (var i = 0; i < Count; i++)
             {
-                result.Append("["+i+"] " + this[i]);
+                result.Append("[" + i + "] " + this[i]);
                 result.Append("\r\n");
             }
             result.Append("\r\n");

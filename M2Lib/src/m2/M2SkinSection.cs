@@ -31,7 +31,7 @@ namespace M2Lib.m2
             }
             else
             {
-                SubmeshId = (ushort) stream.ReadUInt32();
+                SubmeshId = (ushort)stream.ReadUInt32();
             }
             StartVertex = stream.ReadUInt16();
             NVertices = stream.ReadUInt16();
@@ -59,7 +59,7 @@ namespace M2Lib.m2
             else
             {
                 if (Level > 0) throw new Exception("This model has too many polygons to be saved in this version.");
-                stream.Write((uint) SubmeshId);
+                stream.Write((uint)SubmeshId);
             }
             stream.Write(StartVertex);
             stream.Write(NVertices);

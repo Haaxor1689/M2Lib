@@ -27,7 +27,7 @@
         /// <returns>A short, compressed version of value.</returns>
         private static short FloatToShort(float value)
         {
-            return (short) (value > 0 ? value*32767.0 - 32768 : value*32767.0 + 32768);
+            return (short)(value > 0 ? value * 32767.0 - 32768 : value * 32767.0 + 32768);
         }
 
         public override string ToString()

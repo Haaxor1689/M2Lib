@@ -70,7 +70,7 @@ namespace M2Lib.m2
                 Length = timeEnd - TimeStart;
             }
             MovingSpeed = stream.ReadSingle();
-            Flags = (SequenceFlags) stream.ReadUInt32();
+            Flags = (SequenceFlags)stream.ReadUInt32();
             Probability = stream.ReadInt16();
             _padding = stream.ReadUInt16();
             MinimumRepetitions = stream.ReadUInt32();
@@ -83,8 +83,8 @@ namespace M2Lib.m2
             else
             {
                 var blendTime = stream.ReadUInt32();
-                BlendTimeStart = (ushort) blendTime;
-                BlendTimeEnd = (ushort) blendTime;
+                BlendTimeStart = (ushort)blendTime;
+                BlendTimeEnd = (ushort)blendTime;
             }
             Bounds = stream.ReadCAaBox();
             BoundRadius = stream.ReadSingle();
@@ -107,7 +107,7 @@ namespace M2Lib.m2
                 stream.Write(TimeStart + Length);
             }
             stream.Write(MovingSpeed);
-            stream.Write((uint) Flags);
+            stream.Write((uint)Flags);
             stream.Write(Probability);
             stream.Write(_padding);
             stream.Write(MinimumRepetitions);
@@ -119,7 +119,7 @@ namespace M2Lib.m2
             }
             else
             {
-                stream.Write((BlendTimeStart + BlendTimeEnd)/2);
+                stream.Write((BlendTimeStart + BlendTimeEnd) / 2);
             }
             stream.Write(Bounds);
             stream.Write(BoundRadius);

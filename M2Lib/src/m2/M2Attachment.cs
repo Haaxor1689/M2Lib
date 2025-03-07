@@ -29,8 +29,8 @@ namespace M2Lib.m2
             stream.Write(Position);
             if (version < M2.Format.LichKing && AnimateAttached.Timestamps.Count == 0)
             {
-                AnimateAttached.Timestamps.Add(new M2Array<uint> {0});
-                AnimateAttached.Values.Add(new M2Array<bool> {true});
+                AnimateAttached.Timestamps.Add(new M2Array<uint> { 0 });
+                AnimateAttached.Values.Add(new M2Array<bool> { true });
             }
             AnimateAttached.Save(stream, version);
         }
@@ -58,7 +58,7 @@ namespace M2Lib.m2
             for (short i = 0; i <= maxId; i++) lookup.Add(-1);
             for (short i = 0; i < attachments.Count; i++)
             {
-                var id = (short) attachments[i].Id;
+                var id = (short)attachments[i].Id;
                 if (lookup[id] == -1) lookup[id] = i;
             }
             return lookup;

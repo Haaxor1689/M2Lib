@@ -32,7 +32,7 @@ namespace M2Lib.m2
         public void Load(BinaryReader stream, M2.Format version)
         {
             Debug.Assert(version != M2.Format.Useless);
-            InterpolationType = (InterpolationTypes) stream.ReadUInt16();
+            InterpolationType = (InterpolationTypes)stream.ReadUInt16();
             GlobalSequence = stream.ReadInt16();
             if (version >= M2.Format.LichKing)
             {
@@ -49,7 +49,7 @@ namespace M2Lib.m2
         public void Save(BinaryWriter stream, M2.Format version)
         {
             Debug.Assert(version != M2.Format.Useless);
-            stream.Write((ushort) InterpolationType);
+            stream.Write((ushort)InterpolationType);
             stream.Write(GlobalSequence);
             if (version >= M2.Format.LichKing)
             {
@@ -118,7 +118,7 @@ namespace M2Lib.m2
                     if (Sequences[i].IsExtern)
                     {
                         if (Timestamps[i].Count <= 0) continue;
-                        Timestamps[i].StoredOffset = (uint) Sequences[i].WritingAnimFile.BaseStream.Position;
+                        Timestamps[i].StoredOffset = (uint)Sequences[i].WritingAnimFile.BaseStream.Position;
                         for (var j = 0; j < Timestamps[i].Count; j++)
                             Sequences[i].WritingAnimFile.Write(Timestamps[i][j]);
                         Timestamps[i].RewriteHeader(stream, version);
@@ -219,12 +219,12 @@ namespace M2Lib.m2
                 uint startIndex;
                 uint endIndex;
                 if (indexesPrevious.Count == 0) startIndex = 0;
-                else startIndex = (uint) indexesPrevious[indexesPrevious.Count - 1]; // Maximum
+                else startIndex = (uint)indexesPrevious[indexesPrevious.Count - 1]; // Maximum
 
                 if (indexesNext.Count == 0)
-                    endIndex = (uint) (_legacyTimestamps.Count - 1);
+                    endIndex = (uint)(_legacyTimestamps.Count - 1);
                 // We know there more than 1 element (see line 1) so it's >= 0
-                else endIndex = (uint) indexesNext[0]; // Minimum
+                else endIndex = (uint)indexesNext[0]; // Minimum
 
                 _legacyRanges.Add(new Range(startIndex, endIndex));
             }

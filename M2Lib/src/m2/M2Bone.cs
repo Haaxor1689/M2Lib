@@ -26,20 +26,20 @@ namespace M2Lib.m2
         private M2Track<M2CompQuat> _compressedRotation;
 
         private readonly ushort[] _unknown = new ushort[2];
-        public KeyBone KeyBoneId { get; set; } = (KeyBone) (-1);
+        public KeyBone KeyBoneId { get; set; } = (KeyBone)(-1);
         public BoneFlags Flags { get; set; } = 0;
         public short ParentBone { get; set; } = -1;
         public ushort SubmeshId { get; set; }
         public M2Track<C3Vector> Translation { get; set; } = new M2Track<C3Vector>();
-        public M2Track<C4Quaternion> Rotation { get; set; } = new M2Track<C4Quaternion>(new C4Quaternion(0,0,0,1));
+        public M2Track<C4Quaternion> Rotation { get; set; } = new M2Track<C4Quaternion>(new C4Quaternion(0, 0, 0, 1));
         public M2Track<C3Vector> Scale { get; set; } = new M2Track<C3Vector>(new C3Vector(1, 1, 1));
         public C3Vector Pivot { get; set; }
 
         public void Load(BinaryReader stream, M2.Format version)
         {
             Debug.Assert(version != M2.Format.Useless);
-            KeyBoneId = (KeyBone) stream.ReadInt32();
-            Flags = (BoneFlags) stream.ReadUInt32();
+            KeyBoneId = (KeyBone)stream.ReadInt32();
+            Flags = (BoneFlags)stream.ReadUInt32();
             ParentBone = stream.ReadInt16();
             SubmeshId = stream.ReadUInt16();
             if (version > M2.Format.Classic)
@@ -63,8 +63,8 @@ namespace M2Lib.m2
         public void Save(BinaryWriter stream, M2.Format version)
         {
             Debug.Assert(version != M2.Format.Useless);
-            stream.Write((int) KeyBoneId);
-            stream.Write((uint) Flags);
+            stream.Write((int)KeyBoneId);
+            stream.Write((uint)Flags);
             stream.Write(ParentBone);
             stream.Write(SubmeshId);
             if (version > M2.Format.Classic)
@@ -142,11 +142,11 @@ namespace M2Lib.m2
         public static M2Array<short> GenerateKeyBoneLookup(M2Array<M2Bone> bones)
         {
             var lookup = new M2Array<short>();
-            var maxId = (int) bones.Max(x => x.KeyBoneId);
+            var maxId = (int)bones.Max(x => x.KeyBoneId);
             for (short i = 0; i < maxId + 1; i++) lookup.Add(-1);
             for (short i = 0; i < bones.Count; i++)
             {
-                var id = (int) bones[i].KeyBoneId;
+                var id = (int)bones[i].KeyBoneId;
                 if (id >= 0 && lookup[id] == -1) lookup[id] = i;
             }
             return lookup;

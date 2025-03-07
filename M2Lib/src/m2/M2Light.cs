@@ -27,7 +27,7 @@ namespace M2Lib.m2
 
         public void Load(BinaryReader stream, M2.Format version)
         {
-            Type = (LightType) stream.ReadUInt16();
+            Type = (LightType)stream.ReadUInt16();
             Bone = stream.ReadInt16();
             Position = stream.ReadC3Vector();
             AmbientColor.Load(stream, version);
@@ -41,7 +41,7 @@ namespace M2Lib.m2
 
         public void Save(BinaryWriter stream, M2.Format version)
         {
-            stream.Write((ushort) Type);
+            stream.Write((ushort)Type);
             stream.Write(Bone);
             stream.Write(Position);
             AmbientColor.Save(stream, version);

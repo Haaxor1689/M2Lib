@@ -29,7 +29,7 @@
         private static float ShortToFloat(short value)
         {
             if (value == -1) return 1;
-            return (float) ((value > 0 ? value - 32767 : value + 32767)/32767.0);
+            return (float)((value > 0 ? value - 32767 : value + 32767) / 32767.0);
         }
 
         public override string ToString()

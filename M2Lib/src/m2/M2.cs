@@ -98,12 +98,12 @@ namespace M2Lib.m2
             Debug.Assert(magic == "MD20");
 
             // LOAD HEADER
-            if (version == Format.Useless) version = (Format) stream.ReadUInt32();
+            if (version == Format.Useless) version = (Format)stream.ReadUInt32();
             else stream.ReadUInt32();
             Version = version;
             Debug.Assert(version != Format.Useless);
             _name.Load(stream, version);
-            GlobalModelFlags = (GlobalFlags) stream.ReadUInt32();
+            GlobalModelFlags = (GlobalFlags)stream.ReadUInt32();
             GlobalSequences.Load(stream, version);
             Sequences.Load(stream, version);
             SkipArrayParsing(stream, version);
@@ -153,7 +153,7 @@ namespace M2Lib.m2
                                                            seq.IsExtern))
                 {
                     var substream = stream.BaseStream as Substream;
-                    var path = substream != null ? ((FileStream) substream.GetInnerStream()).Name : ((FileStream) stream.BaseStream).Name;
+                    var path = substream != null ? ((FileStream)substream.GetInnerStream()).Name : ((FileStream)stream.BaseStream).Name;
                     seq.ReadingAnimFile =
                         new BinaryReader(
                             new FileStream(seq.GetAnimFilePath(path), FileMode.Open));
@@ -188,13 +188,14 @@ namespace M2Lib.m2
             TextureTransforms.LoadContent(stream, version);
 
             /** @author PhilipTNG */
-            if(version < Format.Cataclysm) { 
-                foreach(var mat in Materials)
+            if (version < Format.Cataclysm)
+            {
+                foreach (var mat in Materials)
                 {
                     // Flags fix
-                    mat.Flags = mat.Flags & (M2Material.RenderFlags) 0x1F;
+                    mat.Flags = mat.Flags & (M2Material.RenderFlags)0x1F;
                     // Blending mode fix
-                    if(mat.BlendMode > M2Material.BlendingMode.DeeprunTram) mat.BlendMode = M2Material.BlendingMode.Mod2X;
+                    if (mat.BlendMode > M2Material.BlendingMode.DeeprunTram) mat.BlendMode = M2Material.BlendingMode.Mod2X;
                 }
             }
 
@@ -227,9 +228,9 @@ namespace M2Lib.m2
             if (version == Format.Useless) version = Version;
 
             // SAVE HEADER
-            stream.Write((uint) version);
+            stream.Write((uint)version);
             _name.Save(stream, version);
-            stream.Write((uint) GlobalModelFlags);
+            stream.Write((uint)GlobalModelFlags);
             GlobalSequences.Save(stream, version);
             Sequences.Save(stream, version);
             var sequenceLookup = M2Sequence.GenerateLookup(Sequences);
@@ -249,14 +250,14 @@ namespace M2Lib.m2
             Colors.Save(stream, version);
             Textures.Save(stream, version);
             Transparencies.Save(stream, version);
-            if (version < Format.LichKing) stream.Write((long) 0); //Unknown Ref
+            if (version < Format.LichKing) stream.Write((long)0); //Unknown Ref
             TextureTransforms.Save(stream, version);
             var texReplaceLookup = M2Texture.GenerateTexReplaceLookup(Textures);
             texReplaceLookup.Save(stream, version);
             Materials.Save(stream, version);
             BoneLookup.Save(stream, version);
             TexLookup.Save(stream, version);
-            if(version <= Format.LichKing && TexUnitLookup.Count == 0) TexUnitLookup.Add(0);// @author Zim4ik
+            if (version <= Format.LichKing && TexUnitLookup.Count == 0) TexUnitLookup.Add(0);// @author Zim4ik
             TexUnitLookup.Save(stream, version);
             TransLookup.Save(stream, version);
             UvAnimLookup.Save(stream, version);

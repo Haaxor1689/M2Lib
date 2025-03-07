@@ -49,15 +49,15 @@ namespace M2Lib.m2
 
         public void Load(BinaryReader stream, M2.Format version)
         {
-            Type = (TextureType) stream.ReadUInt32();
-            Flags = (TextureFlags) stream.ReadUInt32();
+            Type = (TextureType)stream.ReadUInt32();
+            Flags = (TextureFlags)stream.ReadUInt32();
             _name.Load(stream, version);
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
         {
-            stream.Write((uint) Type);
-            stream.Write((uint) Flags);
+            stream.Write((uint)Type);
+            stream.Write((uint)Flags);
             _name.Save(stream, version);
         }
 
@@ -75,11 +75,11 @@ namespace M2Lib.m2
         {
             var lookup = new M2Array<short>();
             if (textures.Count == 0) return lookup;
-            var maxId = (short) textures.Max(x => x.Type);
+            var maxId = (short)textures.Max(x => x.Type);
             for (short i = 0; i <= maxId; i++) lookup.Add(-1);
             for (short i = 0; i < textures.Count; i++)
             {
-                var id = (short) textures[i].Type;
+                var id = (short)textures[i].Type;
                 if (lookup[id] == -1) lookup[id] = i;
             }
             return lookup;

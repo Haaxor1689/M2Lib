@@ -13,7 +13,7 @@ namespace M2Lib.m2
         public byte[] BoneWeights { get; set; } = new byte[4];
         public byte[] BoneIndices { get; set; } = new byte[4];
         public C3Vector Normal { get; set; }
-        public C2Vector[] TexCoords { get; set; } = {new C2Vector(), new C2Vector()};
+        public C2Vector[] TexCoords { get; set; } = { new C2Vector(), new C2Vector() };
 
         public override string ToString()
         {
@@ -28,10 +28,10 @@ namespace M2Lib.m2
 
         public bool Equals(M2Vertex other)
         {
-            return other != null 
-                && Position.Equals(other.Position) 
-                && Normal.Equals(other.Normal) 
-                && Equals(TexCoords[0], other.TexCoords[0]) 
+            return other != null
+                && Position.Equals(other.Position)
+                && Normal.Equals(other.Normal)
+                && Equals(TexCoords[0], other.TexCoords[0])
                 && Equals(TexCoords[1], other.TexCoords[1]);
         }
 
@@ -49,10 +49,10 @@ namespace M2Lib.m2
         public override int GetHashCode()
         {
             var hashCode = Position.GetHashCode();
-            hashCode = (hashCode*397) ^ (BoneWeights?.GetHashCode() ?? 0);
-            hashCode = (hashCode*397) ^ (BoneIndices?.GetHashCode() ?? 0);
-            hashCode = (hashCode*397) ^ Normal.GetHashCode();
-            hashCode = (hashCode*397) ^ (TexCoords?.GetHashCode() ?? 0);
+            hashCode = (hashCode * 397) ^ (BoneWeights?.GetHashCode() ?? 0);
+            hashCode = (hashCode * 397) ^ (BoneIndices?.GetHashCode() ?? 0);
+            hashCode = (hashCode * 397) ^ Normal.GetHashCode();
+            hashCode = (hashCode * 397) ^ (TexCoords?.GetHashCode() ?? 0);
             return hashCode;
         }
 
@@ -62,7 +62,7 @@ namespace M2Lib.m2
             for (var i = 0; i < BoneWeights.Length; i++) BoneWeights[i] = stream.ReadByte();
             for (var i = 0; i < BoneIndices.Length; i++) BoneIndices[i] = stream.ReadByte();
             Normal = stream.ReadC3Vector();
-            TexCoords = new[] {stream.ReadC2Vector(), stream.ReadC2Vector()};
+            TexCoords = new[] { stream.ReadC2Vector(), stream.ReadC2Vector() };
         }
 
         public void Save(BinaryWriter stream, M2.Format version)

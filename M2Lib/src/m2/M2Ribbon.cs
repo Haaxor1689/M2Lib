@@ -67,8 +67,8 @@ namespace M2Lib.m2
             TexSlot.Save(stream, version);
             if (version < M2.Format.LichKing && DataEnabled.Timestamps.Count == 0)
             {
-                DataEnabled.Timestamps.Add(new M2Array<uint> {0});
-                DataEnabled.Values.Add(new M2Array<bool> {true});
+                DataEnabled.Timestamps.Add(new M2Array<uint> { 0 });
+                DataEnabled.Values.Add(new M2Array<bool> { true });
             }
             DataEnabled.Save(stream, version);
             if (version < M2.Format.LichKing) return;

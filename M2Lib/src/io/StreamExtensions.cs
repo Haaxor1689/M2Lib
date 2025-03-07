@@ -20,70 +20,70 @@ namespace M2Lib.io
 
         static StreamExtensions()
         {
-            ReadFunctions[typeof (bool)] = s => s.ReadBoolean();
-            ReadFunctions[typeof (byte)] = s => s.ReadByte();
-            ReadFunctions[typeof (short)] = s => s.ReadInt16();
-            ReadFunctions[typeof (ushort)] = s => s.ReadUInt16();
-            ReadFunctions[typeof (int)] = s => s.ReadInt32();
-            ReadFunctions[typeof (uint)] = s => s.ReadUInt32();
-            ReadFunctions[typeof (float)] = s => s.ReadSingle();
-            ReadFunctions[typeof (C2Vector)] = s => s.ReadC2Vector();
-            ReadFunctions[typeof (C33Matrix)] = s => s.ReadC33Matrix();
-            ReadFunctions[typeof (C3Vector)] = s => s.ReadC3Vector();
-            ReadFunctions[typeof (C44Matrix)] = s => s.ReadC44Matrix();
-            ReadFunctions[typeof (C4Plane)] = s => s.ReadC4Plane();
-            ReadFunctions[typeof (C4Quaternion)] = s => s.ReadC4Quaternion();
-            ReadFunctions[typeof (C4Vector)] = s => s.ReadC4Vector();
-            ReadFunctions[typeof (CAaBox)] = s => s.ReadCAaBox();
-            ReadFunctions[typeof (CAaSphere)] = s => s.ReadCAaSphere();
-            ReadFunctions[typeof (CArgb)] = s => s.ReadCArgb();
-            ReadFunctions[typeof (M2CompQuat)] = s => s.ReadCompQuat();
-            ReadFunctions[typeof (CRange)] = s => s.ReadCRange();
-            ReadFunctions[typeof (FixedPoint_0_15)] = s => s.ReadFixedPoint_0_15();
-            ReadFunctions[typeof (FixedPoint_6_9)] = s => s.ReadFixedPoint_6_9();
-            ReadFunctions[typeof (FixedPoint_2_5)] = s => s.ReadFixedPoint_2_5();
-            ReadFunctions[typeof (VertexProperty)] = s => s.ReadVertexProperty();
+            ReadFunctions[typeof(bool)] = s => s.ReadBoolean();
+            ReadFunctions[typeof(byte)] = s => s.ReadByte();
+            ReadFunctions[typeof(short)] = s => s.ReadInt16();
+            ReadFunctions[typeof(ushort)] = s => s.ReadUInt16();
+            ReadFunctions[typeof(int)] = s => s.ReadInt32();
+            ReadFunctions[typeof(uint)] = s => s.ReadUInt32();
+            ReadFunctions[typeof(float)] = s => s.ReadSingle();
+            ReadFunctions[typeof(C2Vector)] = s => s.ReadC2Vector();
+            ReadFunctions[typeof(C33Matrix)] = s => s.ReadC33Matrix();
+            ReadFunctions[typeof(C3Vector)] = s => s.ReadC3Vector();
+            ReadFunctions[typeof(C44Matrix)] = s => s.ReadC44Matrix();
+            ReadFunctions[typeof(C4Plane)] = s => s.ReadC4Plane();
+            ReadFunctions[typeof(C4Quaternion)] = s => s.ReadC4Quaternion();
+            ReadFunctions[typeof(C4Vector)] = s => s.ReadC4Vector();
+            ReadFunctions[typeof(CAaBox)] = s => s.ReadCAaBox();
+            ReadFunctions[typeof(CAaSphere)] = s => s.ReadCAaSphere();
+            ReadFunctions[typeof(CArgb)] = s => s.ReadCArgb();
+            ReadFunctions[typeof(M2CompQuat)] = s => s.ReadCompQuat();
+            ReadFunctions[typeof(CRange)] = s => s.ReadCRange();
+            ReadFunctions[typeof(FixedPoint_0_15)] = s => s.ReadFixedPoint_0_15();
+            ReadFunctions[typeof(FixedPoint_6_9)] = s => s.ReadFixedPoint_6_9();
+            ReadFunctions[typeof(FixedPoint_2_5)] = s => s.ReadFixedPoint_2_5();
+            ReadFunctions[typeof(VertexProperty)] = s => s.ReadVertexProperty();
 
-            WriteFunctions[typeof (bool)] = (s, t) => s.Write((bool) t);
-            WriteFunctions[typeof (byte)] = (s, t) => s.Write((byte) t);
-            WriteFunctions[typeof (short)] = (s, t) => s.Write((short) t);
-            WriteFunctions[typeof (ushort)] = (s, t) => s.Write((ushort) t);
-            WriteFunctions[typeof (int)] = (s, t) => s.Write((int) t);
-            WriteFunctions[typeof (uint)] = (s, t) => s.Write((uint) t);
-            WriteFunctions[typeof (float)] = (s, t) => s.Write((float) t);
-            WriteFunctions[typeof (C2Vector)] = (s, t) => s.Write((C2Vector) t);
-            WriteFunctions[typeof (C33Matrix)] = (s, t) => s.Write((C33Matrix) t);
-            WriteFunctions[typeof (C3Vector)] = (s, t) => s.Write((C3Vector) t);
-            WriteFunctions[typeof (C44Matrix)] = (s, t) => s.Write((C44Matrix) t);
-            WriteFunctions[typeof (C4Plane)] = (s, t) => s.Write((C4Plane) t);
-            WriteFunctions[typeof (C4Quaternion)] = (s, t) => s.Write((C4Quaternion) t);
-            WriteFunctions[typeof (C4Vector)] = (s, t) => s.Write((C4Vector) t);
-            WriteFunctions[typeof (CAaBox)] = (s, t) => s.Write((CAaBox) t);
-            WriteFunctions[typeof (CAaSphere)] = (s, t) => s.Write((CAaSphere) t);
-            WriteFunctions[typeof (CArgb)] = (s, t) => s.Write((CArgb) t);
-            WriteFunctions[typeof (M2CompQuat)] = (s, t) => s.Write((M2CompQuat) t);
-            WriteFunctions[typeof (CRange)] = (s, t) => s.Write((CRange) t);
-            WriteFunctions[typeof (FixedPoint_0_15)] = (s, t) => s.Write((FixedPoint_0_15) t);
-            WriteFunctions[typeof (FixedPoint_6_9)] = (s, t) => s.Write((FixedPoint_6_9) t);
-            WriteFunctions[typeof (FixedPoint_2_5)] = (s, t) => s.Write((FixedPoint_2_5) t);
-            WriteFunctions[typeof (VertexProperty)] = (s, t) => s.Write((VertexProperty) t);
+            WriteFunctions[typeof(bool)] = (s, t) => s.Write((bool)t);
+            WriteFunctions[typeof(byte)] = (s, t) => s.Write((byte)t);
+            WriteFunctions[typeof(short)] = (s, t) => s.Write((short)t);
+            WriteFunctions[typeof(ushort)] = (s, t) => s.Write((ushort)t);
+            WriteFunctions[typeof(int)] = (s, t) => s.Write((int)t);
+            WriteFunctions[typeof(uint)] = (s, t) => s.Write((uint)t);
+            WriteFunctions[typeof(float)] = (s, t) => s.Write((float)t);
+            WriteFunctions[typeof(C2Vector)] = (s, t) => s.Write((C2Vector)t);
+            WriteFunctions[typeof(C33Matrix)] = (s, t) => s.Write((C33Matrix)t);
+            WriteFunctions[typeof(C3Vector)] = (s, t) => s.Write((C3Vector)t);
+            WriteFunctions[typeof(C44Matrix)] = (s, t) => s.Write((C44Matrix)t);
+            WriteFunctions[typeof(C4Plane)] = (s, t) => s.Write((C4Plane)t);
+            WriteFunctions[typeof(C4Quaternion)] = (s, t) => s.Write((C4Quaternion)t);
+            WriteFunctions[typeof(C4Vector)] = (s, t) => s.Write((C4Vector)t);
+            WriteFunctions[typeof(CAaBox)] = (s, t) => s.Write((CAaBox)t);
+            WriteFunctions[typeof(CAaSphere)] = (s, t) => s.Write((CAaSphere)t);
+            WriteFunctions[typeof(CArgb)] = (s, t) => s.Write((CArgb)t);
+            WriteFunctions[typeof(M2CompQuat)] = (s, t) => s.Write((M2CompQuat)t);
+            WriteFunctions[typeof(CRange)] = (s, t) => s.Write((CRange)t);
+            WriteFunctions[typeof(FixedPoint_0_15)] = (s, t) => s.Write((FixedPoint_0_15)t);
+            WriteFunctions[typeof(FixedPoint_6_9)] = (s, t) => s.Write((FixedPoint_6_9)t);
+            WriteFunctions[typeof(FixedPoint_2_5)] = (s, t) => s.Write((FixedPoint_2_5)t);
+            WriteFunctions[typeof(VertexProperty)] = (s, t) => s.Write((VertexProperty)t);
         }
 
         public static T ReadGeneric<T>(this BinaryReader stream, M2.Format version)
             where T : new()
         {
-            if (!typeof (IMarshalable).IsAssignableFrom(typeof (T))) return (T) ReadFunctions[typeof (T)](stream);
+            if (!typeof(IMarshalable).IsAssignableFrom(typeof(T))) return (T)ReadFunctions[typeof(T)](stream);
             var item = new T();
-            ((IMarshalable) item).Load(stream, version);
+            ((IMarshalable)item).Load(stream, version);
             return item;
         }
 
 
         public static void WriteGeneric<T>(this BinaryWriter stream, M2.Format version, T item) where T : new()
         {
-            if (typeof (IMarshalable).IsAssignableFrom(typeof (T)))
-                ((IMarshalable) item).Save(stream, version);
-            else WriteFunctions[typeof (T)](stream, item);
+            if (typeof(IMarshalable).IsAssignableFrom(typeof(T)))
+                ((IMarshalable)item).Save(stream, version);
+            else WriteFunctions[typeof(T)](stream, item);
         }
 
         //READING OF STRUCTS

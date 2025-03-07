@@ -18,7 +18,7 @@ namespace M2Lib.types
 
         public override bool Equals(object obj)
         {
-            return obj != null && Equals((C3Vector) obj);
+            return obj != null && Equals((C3Vector)obj);
         }
 
         public override int GetHashCode()
@@ -26,8 +26,8 @@ namespace M2Lib.types
             unchecked
             {
                 var hashCode = X.GetHashCode();
-                hashCode = (hashCode*397) ^ Y.GetHashCode();
-                hashCode = (hashCode*397) ^ Z.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
                 return hashCode;
             }
         }

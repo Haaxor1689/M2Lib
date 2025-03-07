@@ -37,14 +37,14 @@ namespace M2Lib.m2
 
         public void Load(BinaryReader stream, M2.Format version)
         {
-            Flags = (RenderFlags) stream.ReadUInt16();
-            BlendMode = (BlendingMode) stream.ReadUInt16();
+            Flags = (RenderFlags)stream.ReadUInt16();
+            BlendMode = (BlendingMode)stream.ReadUInt16();
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
         {
-            stream.Write((ushort) Flags);
-            stream.Write((ushort) BlendMode);
+            stream.Write((ushort)Flags);
+            stream.Write((ushort)BlendMode);
         }
     }
 }

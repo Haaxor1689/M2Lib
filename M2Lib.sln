@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2Lib", "M2Lib\M2Lib.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{D6AFFB41-62DA-4624-B199-48A69472761A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{80834C61-CFDB-4047-8E91-EA85A9291F00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2Converter", "M2Converter\M2Converter.csproj", "{80834C61-CFDB-4047-8E91-EA85A9291F00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
