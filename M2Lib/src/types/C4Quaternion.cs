@@ -5,7 +5,10 @@
     /// </summary>
     public struct C4Quaternion
     {
-        public readonly float X, Y, Z, W;
+        public readonly float X,
+            Y,
+            Z,
+            W;
 
         public C4Quaternion(float p1, float p2, float p3, float p4)
         {
@@ -17,7 +20,12 @@
 
         public static explicit operator M2CompQuat(C4Quaternion quat)
         {
-            return new M2CompQuat(FloatToShort(quat.X), FloatToShort(quat.Y), FloatToShort(quat.Z), FloatToShort(quat.W));
+            return new M2CompQuat(
+                FloatToShort(quat.X),
+                FloatToShort(quat.Y),
+                FloatToShort(quat.Z),
+                FloatToShort(quat.W)
+            );
         }
 
         /// <summary>

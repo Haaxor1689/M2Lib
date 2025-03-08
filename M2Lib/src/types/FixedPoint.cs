@@ -154,8 +154,9 @@ namespace M2Lib.types
             if (toIndex < 0)
                 throw new IndexOutOfRangeException("toIndex < 0: " + toIndex);
             if (fromIndex > toIndex)
-                throw new IndexOutOfRangeException("fromIndex: " + fromIndex +
-                                                   " > toIndex: " + toIndex);
+                throw new IndexOutOfRangeException(
+                    "fromIndex: " + fromIndex + " > toIndex: " + toIndex
+                );
         }
 
         public static string ToBitString(this BitArray bits)

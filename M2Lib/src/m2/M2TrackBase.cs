@@ -14,7 +14,7 @@ namespace M2Lib.m2
             Instant = 0,
             Linear = 1,
             Hermite = 2,
-            Bezier = 3
+            Bezier = 3,
         }
 
         private M2Array<Range> _legacyRanges;
@@ -27,7 +27,6 @@ namespace M2Lib.m2
         // Used only to read 1 timeline formats and to open correct .anim files when needed.
         // Legacy fields are automatically converted to standard ones in methods.
         public IReadOnlyList<M2Sequence> Sequences { set; get; }
-
 
         public void Load(BinaryReader stream, M2.Format version)
         {
@@ -117,8 +116,10 @@ namespace M2Lib.m2
                     }
                     if (Sequences[i].IsExtern)
                     {
-                        if (Timestamps[i].Count <= 0) continue;
-                        Timestamps[i].StoredOffset = (uint)Sequences[i].WritingAnimFile.BaseStream.Position;
+                        if (Timestamps[i].Count <= 0)
+                            continue;
+                        Timestamps[i].StoredOffset = (uint)
+                            Sequences[i].WritingAnimFile.BaseStream.Position;
                         for (var j = 0; j < Timestamps[i].Count; j++)
                             Sequences[i].WritingAnimFile.Write(Timestamps[i][j]);
                         Timestamps[i].RewriteHeader(stream, version);
@@ -155,7 +156,6 @@ namespace M2Lib.m2
             return builder.ToString();
         }
 
-
         /// <summary>
         ///     Pre : Sequences != null
         /// </summary>
@@ -171,7 +171,8 @@ namespace M2Lib.m2
             {
                 for (var i = 0; i < Timestamps.Count; i++)
                 {
-                    if (Timestamps[i].Count == 0) continue;
+                    if (Timestamps[i].Count == 0)
+                        continue;
                     for (var j = 0; j < Timestamps[i].Count; j++)
                     {
                         _legacyTimestamps.Add(Timestamps[i][j] + Sequences[i].TimeStart);
@@ -207,24 +208,27 @@ namespace M2Lib.m2
                     continue;
                 }
                 var seq = Sequences[index];
-                var indexesPrevious =
-                    Enumerable.Range(0, _legacyTimestamps.Count) // Indexes of times <= to the beginning of sequence.
-                        .Where(i => _legacyTimestamps[i] <= seq.TimeStart)
-                        .ToList();
-                var indexesNext =
-                    Enumerable.Range(0, _legacyTimestamps.Count) // Indexes of times >= to the end of sequence.
-                        .Where(i => _legacyTimestamps[i] >= seq.TimeStart + seq.Length)
-                        .ToList();
+                var indexesPrevious = Enumerable
+                    .Range(0, _legacyTimestamps.Count) // Indexes of times <= to the beginning of sequence.
+                    .Where(i => _legacyTimestamps[i] <= seq.TimeStart)
+                    .ToList();
+                var indexesNext = Enumerable
+                    .Range(0, _legacyTimestamps.Count) // Indexes of times >= to the end of sequence.
+                    .Where(i => _legacyTimestamps[i] >= seq.TimeStart + seq.Length)
+                    .ToList();
 
                 uint startIndex;
                 uint endIndex;
-                if (indexesPrevious.Count == 0) startIndex = 0;
-                else startIndex = (uint)indexesPrevious[indexesPrevious.Count - 1]; // Maximum
+                if (indexesPrevious.Count == 0)
+                    startIndex = 0;
+                else
+                    startIndex = (uint)indexesPrevious[indexesPrevious.Count - 1]; // Maximum
 
                 if (indexesNext.Count == 0)
                     endIndex = (uint)(_legacyTimestamps.Count - 1);
                 // We know there more than 1 element (see line 1) so it's >= 0
-                else endIndex = (uint)indexesNext[0]; // Minimum
+                else
+                    endIndex = (uint)indexesNext[0]; // Minimum
 
                 _legacyRanges.Add(new Range(startIndex, endIndex));
             }
@@ -242,7 +246,8 @@ namespace M2Lib.m2
         {
             _legacyRanges.LoadContent(stream, version);
             _legacyTimestamps.LoadContent(stream, version);
-            if (_legacyTimestamps.Count == 0) return;
+            if (_legacyTimestamps.Count == 0)
+                return;
             if (GlobalSequence >= 0)
             {
                 Timestamps.Add(_legacyTimestamps);
@@ -253,11 +258,12 @@ namespace M2Lib.m2
                 for (var index = 0; index < Sequences.Count; index++)
                 {
                     var seq = Sequences[index];
-                    var validIndexes = Enumerable.Range(0, _legacyTimestamps.Count)
-                        .Where(
-                            i =>
-                                _legacyTimestamps[i] >= seq.TimeStart &&
-                                _legacyTimestamps[i] <= seq.TimeStart + seq.Length)
+                    var validIndexes = Enumerable
+                        .Range(0, _legacyTimestamps.Count)
+                        .Where(i =>
+                            _legacyTimestamps[i] >= seq.TimeStart
+                            && _legacyTimestamps[i] <= seq.TimeStart + seq.Length
+                        )
                         .ToList();
 
                     var animTimes = new M2Array<uint>();
@@ -265,7 +271,9 @@ namespace M2Lib.m2
                     {
                         var firstIndex = validIndexes[0];
                         var lastIndex = validIndexes[validIndexes.Count - 1];
-                        animTimes.AddRange(_legacyTimestamps.GetRange(firstIndex, lastIndex - firstIndex + 1));
+                        animTimes.AddRange(
+                            _legacyTimestamps.GetRange(firstIndex, lastIndex - firstIndex + 1)
+                        );
                     }
                     Timestamps.Add(animTimes);
                 }

@@ -29,7 +29,8 @@ namespace M2Lib.m2
             Submeshes.Load(stream, version);
             TextureUnits.Load(stream, version);
             Bones = stream.ReadUInt32();
-            if (version >= M2.Format.Cataclysm) ShadowBatches.Load(stream, version);
+            if (version >= M2.Format.Cataclysm)
+                ShadowBatches.Load(stream, version);
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
@@ -42,7 +43,8 @@ namespace M2Lib.m2
             Submeshes.Save(stream, version);
             TextureUnits.Save(stream, version);
             stream.Write(Bones);
-            if (version >= M2.Format.Cataclysm) ShadowBatches.Save(stream, version);
+            if (version >= M2.Format.Cataclysm)
+                ShadowBatches.Save(stream, version);
         }
 
         public void LoadContent(BinaryReader stream, M2.Format version)
@@ -52,7 +54,8 @@ namespace M2Lib.m2
             Properties.LoadContent(stream, version);
             Submeshes.LoadContent(stream, version);
             TextureUnits.LoadContent(stream, version);
-            if (version >= M2.Format.Cataclysm) ShadowBatches.LoadContent(stream, version);
+            if (version >= M2.Format.Cataclysm)
+                ShadowBatches.LoadContent(stream, version);
         }
 
         public void SaveContent(BinaryWriter stream, M2.Format version)
@@ -62,7 +65,8 @@ namespace M2Lib.m2
             Properties.SaveContent(stream, version);
             Submeshes.SaveContent(stream, version);
             TextureUnits.SaveContent(stream, version);
-            if (version >= M2.Format.Cataclysm) ShadowBatches.SaveContent(stream, version);
+            if (version >= M2.Format.Cataclysm)
+                ShadowBatches.SaveContent(stream, version);
         }
 
         public static string SkinFileName(string path, int number)

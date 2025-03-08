@@ -11,7 +11,7 @@ namespace M2Lib.m2
         public enum TextureFlags : uint
         {
             WrapX = 0x01,
-            WrapY = 0x02
+            WrapY = 0x02,
         }
 
         public enum TextureType : uint
@@ -34,10 +34,10 @@ namespace M2Lib.m2
             GuildBackgroundColor = 15,
             GuildEmblemColor = 16,
             GuildBorderColor = 17,
-            GuildEmblem = 18
+            GuildEmblem = 18,
         }
 
-        private readonly M2Array<byte> _name = new M2Array<byte>();
+        private readonly M2Array<byte> _name = new();
         public TextureType Type { get; set; } = TextureType.MonsterSkin1;
         public TextureFlags Flags { get; set; }
 
@@ -74,13 +74,16 @@ namespace M2Lib.m2
         public static M2Array<short> GenerateTexReplaceLookup(M2Array<M2Texture> textures)
         {
             var lookup = new M2Array<short>();
-            if (textures.Count == 0) return lookup;
+            if (textures.Count == 0)
+                return lookup;
             var maxId = (short)textures.Max(x => x.Type);
-            for (short i = 0; i <= maxId; i++) lookup.Add(-1);
+            for (short i = 0; i <= maxId; i++)
+                lookup.Add(-1);
             for (short i = 0; i < textures.Count; i++)
             {
                 var id = (short)textures[i].Type;
-                if (lookup[id] == -1) lookup[id] = i;
+                if (lookup[id] == -1)
+                    lookup[id] = i;
             }
             return lookup;
         }

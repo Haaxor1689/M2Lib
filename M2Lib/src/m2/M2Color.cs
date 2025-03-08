@@ -8,7 +8,8 @@ namespace M2Lib.m2
     public class M2Color : IAnimated
     {
         public M2Track<C3Vector> Color { get; set; } = new M2Track<C3Vector>();
-        public M2Track<FixedPoint_0_15> Alpha { get; set; } = new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
+        public M2Track<FixedPoint_0_15> Alpha { get; set; } =
+            new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
 
         public void Load(BinaryReader stream, M2.Format version)
         {

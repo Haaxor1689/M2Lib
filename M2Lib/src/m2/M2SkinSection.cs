@@ -42,14 +42,16 @@ namespace M2Lib.m2
             BoneInfluences = stream.ReadUInt16();
             RootBone = stream.ReadUInt16();
             CenterMass = stream.ReadC3Vector();
-            if (version <= M2.Format.Classic) return;
+            if (version <= M2.Format.Classic)
+                return;
             CenterBoundingBox = stream.ReadC3Vector();
             Radius = stream.ReadSingle();
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
         {
-            if (version < M2.Format.Cataclysm && BoneInfluences == 0) BoneInfluences = 1; //@author Mjollna
+            if (version < M2.Format.Cataclysm && BoneInfluences == 0)
+                BoneInfluences = 1; //@author Mjollna
 
             if (version >= M2.Format.Cataclysm)
             {
@@ -58,7 +60,10 @@ namespace M2Lib.m2
             }
             else
             {
-                if (Level > 0) throw new Exception("This model has too many polygons to be saved in this version.");
+                if (Level > 0)
+                    throw new Exception(
+                        "This model has too many polygons to be saved in this version."
+                    );
                 stream.Write((uint)SubmeshId);
             }
             stream.Write(StartVertex);
@@ -70,7 +75,8 @@ namespace M2Lib.m2
             stream.Write(BoneInfluences);
             stream.Write(RootBone);
             stream.Write(CenterMass);
-            if (version <= M2.Format.Classic) return;
+            if (version <= M2.Format.Classic)
+                return;
             stream.Write(CenterBoundingBox);
             stream.Write(Radius);
         }

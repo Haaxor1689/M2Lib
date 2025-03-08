@@ -7,7 +7,8 @@
     {
         public readonly C3Vector[] Columns = new C3Vector[3];
 
-        public C33Matrix() : this(new C3Vector(), new C3Vector(), new C3Vector()) { }
+        public C33Matrix()
+            : this(new C3Vector(), new C3Vector(), new C3Vector()) { }
 
         public C33Matrix(C3Vector col0, C3Vector col1, C3Vector col2)
         {

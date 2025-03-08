@@ -27,7 +27,7 @@ namespace M2Lib.m2
             Cataclysm = 272,
             Pandaria = 272,
             Draenor = 272,
-            Legion = 274
+            Legion = 274,
         }
 
         [Flags]
@@ -38,10 +38,10 @@ namespace M2Lib.m2
             Add2Fields = 0x0008,
             LoadPhys = 0x0020,
             HasLod = 0x0080,
-            CameraRelated = 0x0100
+            CameraRelated = 0x0100,
         }
 
-        private readonly M2Array<byte> _name = new M2Array<byte>();
+        private readonly M2Array<byte> _name = new();
 
         public Format Version { get; set; } = Format.Draenor;
 
@@ -60,7 +60,8 @@ namespace M2Lib.m2
         public M2Array<M2Color> Colors { get; } = new M2Array<M2Color>();
         public M2Array<M2Texture> Textures { get; } = new M2Array<M2Texture>();
         public M2Array<M2TextureWeight> Transparencies { get; } = new M2Array<M2TextureWeight>();
-        public M2Array<M2TextureTransform> TextureTransforms { get; } = new M2Array<M2TextureTransform>();
+        public M2Array<M2TextureTransform> TextureTransforms { get; } =
+            new M2Array<M2TextureTransform>();
         public M2Array<M2Material> Materials { get; } = new M2Array<M2Material>();
         public M2Array<M2Attachment> Attachments { get; } = new M2Array<M2Attachment>();
         public M2Array<M2Event> Events { get; } = new M2Array<M2Event>();
@@ -95,29 +96,41 @@ namespace M2Lib.m2
                 stream = new BinaryReader(new Substream(stream.BaseStream));
                 magic = Encoding.UTF8.GetString(stream.ReadBytes(4));
             }
-            Debug.Assert(magic == "MD20");
+            if (magic != "MD20")
+                throw new InvalidOperationException(
+                    "Identifying header 'MD20' not found, probably not a M2 file."
+                );
 
             // LOAD HEADER
-            if (version == Format.Useless) version = (Format)stream.ReadUInt32();
-            else stream.ReadUInt32();
+            if (version == Format.Useless)
+                version = (Format)stream.ReadUInt32();
+            else
+                stream.ReadUInt32();
             Version = version;
-            Debug.Assert(version != Format.Useless);
+
+            if (version == Format.Useless)
+                throw new InvalidOperationException("Unknown M2 version.");
+
             _name.Load(stream, version);
             GlobalModelFlags = (GlobalFlags)stream.ReadUInt32();
             GlobalSequences.Load(stream, version);
             Sequences.Load(stream, version);
             SkipArrayParsing(stream, version);
-            if (version < Format.LichKing) SkipArrayParsing(stream, version);
+            if (version < Format.LichKing)
+                SkipArrayParsing(stream, version);
             Bones.Load(stream, version);
             SkipArrayParsing(stream, version);
             GlobalVertexList.Load(stream, version);
             uint nViews = 0; //For Lich King external views system.
-            if (version < Format.LichKing) Views.Load(stream, version);
-            else nViews = stream.ReadUInt32();
+            if (version < Format.LichKing)
+                Views.Load(stream, version);
+            else
+                nViews = stream.ReadUInt32();
             Colors.Load(stream, version);
             Textures.Load(stream, version);
             Transparencies.Load(stream, version);
-            if (version < Format.LichKing) SkipArrayParsing(stream, version); //Unknown Ref
+            if (version < Format.LichKing)
+                SkipArrayParsing(stream, version); //Unknown Ref
             TextureTransforms.Load(stream, version);
             SkipArrayParsing(stream, version);
             Materials.Load(stream, version);
@@ -141,7 +154,8 @@ namespace M2Lib.m2
             SkipArrayParsing(stream, version);
             Ribbons.Load(stream, version);
             Particles.Load(stream, version);
-            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields)) BlendingMaps.Load(stream, version);
+            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields))
+                BlendingMaps.Load(stream, version);
 
             // LOAD REFERENCED CONTENT
             _name.LoadContent(stream);
@@ -149,31 +163,39 @@ namespace M2Lib.m2
             Sequences.LoadContent(stream, version);
             if (version >= Format.LichKing)
             {
-                foreach (var seq in Sequences.Where(seq => !seq.IsAlias &&
-                                                           seq.IsExtern))
+                foreach (var seq in Sequences.Where(seq => !seq.IsAlias && seq.IsExtern))
                 {
                     var substream = stream.BaseStream as Substream;
-                    var path = substream != null ? ((FileStream)substream.GetInnerStream()).Name : ((FileStream)stream.BaseStream).Name;
-                    seq.ReadingAnimFile =
-                        new BinaryReader(
-                            new FileStream(seq.GetAnimFilePath(path), FileMode.Open));
+                    var path =
+                        substream != null
+                            ? ((FileStream)substream.GetInnerStream()).Name
+                            : ((FileStream)stream.BaseStream).Name;
+                    seq.ReadingAnimFile = new BinaryReader(
+                        new FileStream(seq.GetAnimFilePath(path), FileMode.Open)
+                    );
                 }
             }
             SetSequences();
             Bones.LoadContent(stream, version);
             GlobalVertexList.LoadContent(stream, version);
             //VIEWS
-            if (version < Format.LichKing) Views.LoadContent(stream, version);
+            if (version < Format.LichKing)
+                Views.LoadContent(stream, version);
             else
             {
                 for (var i = 0; i < nViews; i++)
                 {
                     var view = new M2SkinProfile();
                     var substream = stream.BaseStream as Substream;
-                    var path = substream != null ? ((FileStream)substream.GetInnerStream()).Name : ((FileStream)stream.BaseStream).Name;
-                    using (var skinFile = new BinaryReader(
-                        new FileStream(M2SkinProfile.SkinFileName(path, i),
-                            FileMode.Open)))
+                    var path =
+                        substream != null
+                            ? ((FileStream)substream.GetInnerStream()).Name
+                            : ((FileStream)stream.BaseStream).Name;
+                    using (
+                        var skinFile = new BinaryReader(
+                            new FileStream(M2SkinProfile.SkinFileName(path, i), FileMode.Open)
+                        )
+                    )
                     {
                         view.Load(skinFile, version);
                         view.LoadContent(skinFile, version);
@@ -195,7 +217,8 @@ namespace M2Lib.m2
                     // Flags fix
                     mat.Flags = mat.Flags & (M2Material.RenderFlags)0x1F;
                     // Blending mode fix
-                    if (mat.BlendMode > M2Material.BlendingMode.DeeprunTram) mat.BlendMode = M2Material.BlendingMode.Mod2X;
+                    if (mat.BlendMode > M2Material.BlendingMode.DeeprunTram)
+                        mat.BlendMode = M2Material.BlendingMode.Mod2X;
                 }
             }
 
@@ -214,7 +237,8 @@ namespace M2Lib.m2
             Cameras.LoadContent(stream, version);
             Ribbons.LoadContent(stream, version);
             Particles.LoadContent(stream, version);
-            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields)) BlendingMaps.LoadContent(stream, version);
+            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields))
+                BlendingMaps.LoadContent(stream, version);
             foreach (var seq in Sequences)
                 seq.ReadingAnimFile?.Close();
         }
@@ -225,7 +249,8 @@ namespace M2Lib.m2
 
             // SAVE MAGIC
             stream.Write(Encoding.UTF8.GetBytes("MD20"));
-            if (version == Format.Useless) version = Version;
+            if (version == Format.Useless)
+                version = Version;
 
             // SAVE HEADER
             stream.Write((uint)version);
@@ -245,19 +270,23 @@ namespace M2Lib.m2
             var keyBoneLookup = M2Bone.GenerateKeyBoneLookup(Bones);
             keyBoneLookup.Save(stream, version);
             GlobalVertexList.Save(stream, version);
-            if (version < Format.LichKing) Views.Save(stream, version);
-            else stream.Write(Views.Count);
+            if (version < Format.LichKing)
+                Views.Save(stream, version);
+            else
+                stream.Write(Views.Count);
             Colors.Save(stream, version);
             Textures.Save(stream, version);
             Transparencies.Save(stream, version);
-            if (version < Format.LichKing) stream.Write((long)0); //Unknown Ref
+            if (version < Format.LichKing)
+                stream.Write((long)0); //Unknown Ref
             TextureTransforms.Save(stream, version);
             var texReplaceLookup = M2Texture.GenerateTexReplaceLookup(Textures);
             texReplaceLookup.Save(stream, version);
             Materials.Save(stream, version);
             BoneLookup.Save(stream, version);
             TexLookup.Save(stream, version);
-            if (version <= Format.LichKing && TexUnitLookup.Count == 0) TexUnitLookup.Add(0);// @author Zim4ik
+            if (version <= Format.LichKing && TexUnitLookup.Count == 0)
+                TexUnitLookup.Add(0); // @author Zim4ik
             TexUnitLookup.Save(stream, version);
             TransLookup.Save(stream, version);
             UvAnimLookup.Save(stream, version);
@@ -288,7 +317,9 @@ namespace M2Lib.m2
             {
                 uint time = 0;
                 //Alias system. TODO Alias should be skipped in the timing ?
-                foreach (var seq in Sequences/*.Where(seq => !seq.IsAlias)*/)
+                foreach (
+                    var seq in Sequences /*.Where(seq => !seq.IsAlias)*/
+                )
                 {
                     time += 3333;
                     seq.TimeStart = time;
@@ -303,14 +334,16 @@ namespace M2Lib.m2
             Sequences.SaveContent(stream, version);
             if (version >= Format.LichKing)
             {
-                foreach (var seq in Sequences.Where(seq => !seq.IsAlias &&
-                                                           seq.IsExtern))
+                foreach (var seq in Sequences.Where(seq => !seq.IsAlias && seq.IsExtern))
                 {
                     var substream = stream.BaseStream as Substream;
-                    var path = substream != null ? ((FileStream)substream.GetInnerStream()).Name : ((FileStream)stream.BaseStream).Name;
-                    seq.WritingAnimFile =
-                        new BinaryWriter(
-                            new FileStream(seq.GetAnimFilePath(path), FileMode.Create));
+                    var path =
+                        substream != null
+                            ? ((FileStream)substream.GetInnerStream()).Name
+                            : ((FileStream)stream.BaseStream).Name;
+                    seq.WritingAnimFile = new BinaryWriter(
+                        new FileStream(seq.GetAnimFilePath(path), FileMode.Create)
+                    );
                 }
             }
             sequenceLookup.SaveContent(stream);
@@ -319,16 +352,22 @@ namespace M2Lib.m2
             keyBoneLookup.SaveContent(stream);
             GlobalVertexList.SaveContent(stream, version);
             //VIEWS
-            if (version < Format.LichKing) Views.SaveContent(stream, version);
+            if (version < Format.LichKing)
+                Views.SaveContent(stream, version);
             else
             {
                 for (var i = 0; i < Views.Count; i++)
                 {
                     var substream = stream.BaseStream as Substream;
-                    var path = substream != null ? ((FileStream)substream.GetInnerStream()).Name : ((FileStream)stream.BaseStream).Name;
-                    using (var skinFile = new BinaryWriter(
-                        new FileStream(M2SkinProfile.SkinFileName(path, i),
-                            FileMode.Create)))
+                    var path =
+                        substream != null
+                            ? ((FileStream)substream.GetInnerStream()).Name
+                            : ((FileStream)stream.BaseStream).Name;
+                    using (
+                        var skinFile = new BinaryWriter(
+                            new FileStream(M2SkinProfile.SkinFileName(path, i), FileMode.Create)
+                        )
+                    )
                     {
                         Views[i].Save(skinFile, version);
                         Views[i].SaveContent(skinFile, version);
@@ -358,7 +397,8 @@ namespace M2Lib.m2
             cameraLookup.SaveContent(stream, version);
             Ribbons.SaveContent(stream, version);
             Particles.SaveContent(stream, version);
-            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields)) BlendingMaps.SaveContent(stream, version);
+            if (version >= Format.LichKing && GlobalModelFlags.HasFlag(GlobalFlags.Add2Fields))
+                BlendingMaps.SaveContent(stream, version);
             foreach (var seq in Sequences)
                 seq.WritingAnimFile?.Close();
         }

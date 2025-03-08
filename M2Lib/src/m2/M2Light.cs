@@ -11,7 +11,7 @@ namespace M2Lib.m2
         public enum LightType : ushort
         {
             Directional = 0,
-            Point = 1
+            Point = 1,
         }
 
         public LightType Type { get; set; } = LightType.Directional;

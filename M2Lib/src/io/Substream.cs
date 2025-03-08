@@ -32,19 +32,20 @@ namespace M2Lib.io
         public override long Position
         {
             get { return _innerStream.Position - _beginning; }
-
             set { _innerStream.Position = value + _beginning; }
         }
 
         public override void Flush() => _innerStream.Flush();
 
-        public override long Seek(long offset, SeekOrigin origin)
-            => _innerStream.Seek(offset + _beginning, origin) - _beginning;
+        public override long Seek(long offset, SeekOrigin origin) =>
+            _innerStream.Seek(offset + _beginning, origin) - _beginning;
 
         public override void SetLength(long value) => _innerStream.SetLength(value);
 
-        public override int Read(byte[] buffer, int offset, int count) => _innerStream.Read(buffer, offset, count);
+        public override int Read(byte[] buffer, int offset, int count) =>
+            _innerStream.Read(buffer, offset, count);
 
-        public override void Write(byte[] buffer, int offset, int count) => _innerStream.Write(buffer, offset, count);
+        public override void Write(byte[] buffer, int offset, int count) =>
+            _innerStream.Write(buffer, offset, count);
     }
 }

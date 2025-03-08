@@ -4,10 +4,12 @@ using M2Lib.interfaces;
 
 namespace M2Lib.m2
 {
-    public class M2FakeTrack<T> : IReferencer where T : new()
+    public class M2FakeTrack<T> : IReferencer
+        where T : new()
     {
-        public readonly M2Array<short> Timestamps = new M2Array<short>();
-        public readonly M2Array<T> Values = new M2Array<T>();
+        public readonly M2Array<short> Timestamps = new();
+        public readonly M2Array<T> Values = new();
+
         public void Load(BinaryReader stream, M2.Format version)
         {
             Timestamps.Load(stream, version);
@@ -40,6 +42,5 @@ namespace M2Lib.m2
                 builder.Append(Timestamps[i] + "\t" + Values[i] + "\n");
             return builder.ToString();
         }
-
     }
 }

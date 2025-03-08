@@ -14,7 +14,8 @@ namespace M2Lib.m2
         public M2Array<ushort> TextureRefs { get; set; } = new M2Array<ushort>();
         public M2Array<ushort> BlendRefs { get; set; } = new M2Array<ushort>();
         public M2Track<C3Vector> Color { get; set; } = new M2Track<C3Vector>(); //TODO check default values here
-        public M2Track<FixedPoint_0_15> Opacity { get; set; } = new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
+        public M2Track<FixedPoint_0_15> Opacity { get; set; } =
+            new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
         public M2Track<float> HeightAbove { get; set; } = new M2Track<float>();
         public M2Track<float> HeightBelow { get; set; } = new M2Track<float>();
         public float EdgesPerSec { get; set; }
@@ -44,7 +45,8 @@ namespace M2Lib.m2
             MCols = stream.ReadUInt16();
             TexSlot.Load(stream, version);
             DataEnabled.Load(stream, version);
-            if (version < M2.Format.LichKing) return;
+            if (version < M2.Format.LichKing)
+                return;
             Unknown2 = stream.ReadUInt32();
         }
 
@@ -71,7 +73,8 @@ namespace M2Lib.m2
                 DataEnabled.Values.Add(new M2Array<bool> { true });
             }
             DataEnabled.Save(stream, version);
-            if (version < M2.Format.LichKing) return;
+            if (version < M2.Format.LichKing)
+                return;
             stream.Write(Unknown2);
         }
 

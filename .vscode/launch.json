@@ -5,11 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug",
+      "name": "Debug M2Converter",
       "type": "dotnet",
       "request": "launch",
-      "projectPath": "${workspaceFolder}/M2Converter/M2Converter.csproj",
-      "console": "integratedTerminal"
+      "projectPath": "${workspaceFolder}/M2Converter/M2Converter.csproj"
     }
   ]
 }

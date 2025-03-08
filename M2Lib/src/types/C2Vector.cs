@@ -9,7 +9,8 @@ namespace M2Lib.types
     /// </summary>
     public struct C2Vector : IEquatable<C2Vector>
     {
-        public readonly float X, Y;
+        public readonly float X,
+            Y;
 
         public C2Vector(float p1, float p2)
         {
@@ -49,10 +50,8 @@ namespace M2Lib.types
 
         public bool Equals(C2Vector other)
         {
-            return X.Equals(other.X)
-                   && Y.Equals(other.Y);
+            return X.Equals(other.X) && Y.Equals(other.Y);
         }
-
 
         public override string ToString()
         {

@@ -7,7 +7,8 @@ using M2Lib.io;
 
 namespace M2Lib.m2
 {
-    public class M2Array<T> : List<T>, IMarshalable where T : new()
+    public class M2Array<T> : List<T>, IMarshalable
+        where T : new()
     {
         private uint _n; // n&ofs are only used in loading. When writing the real number is used.
 
@@ -36,7 +37,8 @@ namespace M2Lib.m2
         /// <param name="version"></param>
         public void LoadContent(BinaryReader stream, M2.Format version = M2.Format.Useless)
         {
-            if (_n == 0) return;
+            if (_n == 0)
+                return;
 
             stream.BaseStream.Seek(StoredOffset, SeekOrigin.Begin);
             if (typeof(IAnimated).IsAssignableFrom(typeof(T)))
@@ -60,11 +62,15 @@ namespace M2Lib.m2
             {
                 for (var i = 0; i < _n; i++)
                 {
-                    Debug.Assert(StreamExtensions.ReadFunctions.ContainsKey(typeof(T)), "Can't read " + typeof(T));
+                    Debug.Assert(
+                        StreamExtensions.ReadFunctions.ContainsKey(typeof(T)),
+                        "Can't read " + typeof(T)
+                    );
                     Add((T)StreamExtensions.ReadFunctions[typeof(T)](stream));
                 }
             }
-            if (!typeof(IReferencer).IsAssignableFrom(typeof(T))) return;
+            if (!typeof(IReferencer).IsAssignableFrom(typeof(T)))
+                return;
 
             for (var i = 0; i < _n; i++)
                 ((IReferencer)this[i]).LoadContent(stream, version);
@@ -72,7 +78,8 @@ namespace M2Lib.m2
 
         public void SaveContent(BinaryWriter stream, M2.Format version = M2.Format.Useless)
         {
-            if (Count == 0) return;
+            if (Count == 0)
+                return;
             StoredOffset = (uint)stream.BaseStream.Position;
             if (typeof(IAnimated).IsAssignableFrom(typeof(T)))
             {
@@ -91,7 +98,10 @@ namespace M2Lib.m2
             {
                 for (var i = 0; i < Count; i++)
                 {
-                    Debug.Assert(StreamExtensions.WriteFunctions.ContainsKey(typeof(T)), "Can't write " + typeof(T));
+                    Debug.Assert(
+                        StreamExtensions.WriteFunctions.ContainsKey(typeof(T)),
+                        "Can't write " + typeof(T)
+                    );
                     StreamExtensions.WriteFunctions[typeof(T)](stream, this[i]);
                 }
             }
@@ -110,8 +120,10 @@ namespace M2Lib.m2
         /// <param name="sequences"></param>
         public void PassSequences(IReadOnlyList<M2Sequence> sequences)
         {
-            Debug.Assert(typeof(IAnimated).IsAssignableFrom(typeof(T)),
-                "M2Array<" + typeof(T) + "> while T does not implement IAnimated");
+            Debug.Assert(
+                typeof(IAnimated).IsAssignableFrom(typeof(T)),
+                "M2Array<" + typeof(T) + "> while T does not implement IAnimated"
+            );
             _sequencesBackRef = sequences;
         }
 
@@ -128,7 +140,8 @@ namespace M2Lib.m2
         {
             var result = new StringBuilder();
             result.Append("[N: " + Count + "]");
-            if (Count == 0) return result.ToString();
+            if (Count == 0)
+                return result.ToString();
             result.Append("\r\n");
             for (var i = 0; i < Count; i++)
             {

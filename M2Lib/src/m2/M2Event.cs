@@ -18,7 +18,7 @@ namespace M2Lib.m2
 
         public int Data { get; set; }
         public ushort Bone { get; set; }
-        public ushort Unknown { get; set; }//Only use in early vanilla models. See BogBeast.m2 from model.MPQ
+        public ushort Unknown { get; set; } //Only use in early vanilla models. See BogBeast.m2 from model.MPQ
         public C3Vector Position { get; set; }
         public M2TrackBase Enabled { get; set; } = new M2TrackBase();
 

@@ -14,7 +14,7 @@ namespace M2Lib.m2
         {
             Loop = 0,
             Backwards = 1,
-            Freeze = 3
+            Freeze = 3,
         }
 
         public ushort FallbackId;
@@ -26,9 +26,8 @@ namespace M2Lib.m2
             Flags = p2;
         }
 
-        public PlayableRecord() : this(0, 0)
-        {
-        }
+        public PlayableRecord()
+            : this(0, 0) { }
 
         public void Load(BinaryReader stream, M2.Format version)
         {

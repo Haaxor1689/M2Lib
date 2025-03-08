@@ -19,7 +19,7 @@ namespace M2Lib.m2
             Looped = 0x20,
             HasNext = 0x40,
             Blended = 0x80,
-            Stored = 0x100
+            Stored = 0x100,
         }
 
         private ushort _padding;
@@ -41,8 +41,9 @@ namespace M2Lib.m2
         public string Name => AnimationData.IdToName[AnimationId];
         public uint TimeEnd => TimeStart + Length;
 
-        public bool IsExtern => (Flags & (SequenceFlags.Looped | SequenceFlags.LowPriority | SequenceFlags.Stored)) == 0
-            ;
+        public bool IsExtern =>
+            (Flags & (SequenceFlags.Looped | SequenceFlags.LowPriority | SequenceFlags.Stored))
+            == 0;
 
         public bool IsAlias => (Flags & SequenceFlags.HasNext) != 0;
 
@@ -152,11 +153,13 @@ namespace M2Lib.m2
         {
             var lookup = new M2Array<short>();
             var maxId = sequences.Max(x => x.AnimationId);
-            for (short i = 0; i <= maxId; i++) lookup.Add(-1);
+            for (short i = 0; i <= maxId; i++)
+                lookup.Add(-1);
             for (short i = 0; i < sequences.Count; i++)
             {
                 var id = sequences[i].AnimationId;
-                if (lookup[id] == -1) lookup[id] = i;
+                if (lookup[id] == -1)
+                    lookup[id] = i;
             }
             return lookup;
         }
@@ -171,12 +174,15 @@ namespace M2Lib.m2
             */
             while (true)
             {
-                if (id < animLookup.Count && (animLookup[id] > -1)) return id;
+                if (id < animLookup.Count && (animLookup[id] > -1))
+                    return id;
                 id = AnimationData.Fallback[id];
             }
         }
 
-        public static M2Array<PlayableRecord> GeneratePlayableLookup(IReadOnlyList<short> animLookup)
+        public static M2Array<PlayableRecord> GeneratePlayableLookup(
+            IReadOnlyList<short> animLookup
+        )
         {
             const int numberOfActions = 226; // From 2.4.3 DB/AnimationData
             var lookup = new M2Array<PlayableRecord>();
@@ -185,8 +191,10 @@ namespace M2Lib.m2
                 var record = new PlayableRecord(GetRealId(i, animLookup), 0);
                 if (record.FallbackId != i)
                 {
-                    if (AnimationData.PlayThenStop.Contains(i)) record.Flags = PlayableRecord.PlayFlags.Freeze;
-                    else if (AnimationData.PlayBackwards.Contains(i)) record.Flags = PlayableRecord.PlayFlags.Backwards;
+                    if (AnimationData.PlayThenStop.Contains(i))
+                        record.Flags = PlayableRecord.PlayFlags.Freeze;
+                    else if (AnimationData.PlayBackwards.Contains(i))
+                        record.Flags = PlayableRecord.PlayFlags.Backwards;
                 }
                 lookup.Add(record);
             }

@@ -53,13 +53,16 @@ namespace M2Lib.m2
         public static M2Array<short> GenerateLookup(M2Array<M2Attachment> attachments)
         {
             var lookup = new M2Array<short>();
-            if (attachments.Count == 0) return lookup;
+            if (attachments.Count == 0)
+                return lookup;
             var maxId = attachments.Max(x => x.Id);
-            for (short i = 0; i <= maxId; i++) lookup.Add(-1);
+            for (short i = 0; i <= maxId; i++)
+                lookup.Add(-1);
             for (short i = 0; i < attachments.Count; i++)
             {
                 var id = (short)attachments[i].Id;
-                if (lookup[id] == -1) lookup[id] = i;
+                if (lookup[id] == -1)
+                    lookup[id] = i;
             }
             return lookup;
         }

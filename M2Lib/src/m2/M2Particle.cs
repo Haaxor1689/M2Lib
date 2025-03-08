@@ -24,8 +24,8 @@ namespace M2Lib.m2
             get { return _childEmitterFileName.ToNameString(); }
             set { _childEmitterFileName.SetString(value); }
         }
-        private readonly M2Array<byte> _modelFileName = new M2Array<byte>();
-        private readonly M2Array<byte> _childEmitterFileName = new M2Array<byte>();
+        private readonly M2Array<byte> _modelFileName = new();
+        private readonly M2Array<byte> _childEmitterFileName = new();
 
         public byte BlendingType { get; set; }
         public byte EmitterType { get; set; }
@@ -48,7 +48,8 @@ namespace M2Lib.m2
         public M2Track<float> EmissionAreaWidth { get; set; } = new M2Track<float>();
         public M2Track<float> ZSource { get; set; } = new M2Track<float>();
         public M2FakeTrack<C3Vector> ColorTrack { get; set; } = new M2FakeTrack<C3Vector>();
-        public M2FakeTrack<FixedPoint_0_15> AlphaTrack { get; set; } = new M2FakeTrack<FixedPoint_0_15>();
+        public M2FakeTrack<FixedPoint_0_15> AlphaTrack { get; set; } =
+            new M2FakeTrack<FixedPoint_0_15>();
         public M2FakeTrack<C2Vector> ScaleTrack { get; set; } = new M2FakeTrack<C2Vector>();
         public C2Vector ScaleVary { get; set; }
         public M2FakeTrack<ushort> HeadCellTrack { get; set; } = new M2FakeTrack<ushort>();
@@ -74,7 +75,6 @@ namespace M2Lib.m2
         public readonly FixedPoint_2_5[] MultiTextureParamX = new FixedPoint_2_5[2];
         public readonly float[] LegacyManyFloats = new float[10];
         public readonly short[] LegacyTiles = new short[4];
-
 
         public void Load(BinaryReader stream, M2.Format version)
         {
@@ -115,9 +115,11 @@ namespace M2Lib.m2
             HorizontalRange.Load(stream, version);
             Gravity.Load(stream, version);
             Lifespan.Load(stream, version);
-            if (version >= M2.Format.LichKing) LifespanVary = stream.ReadSingle();
+            if (version >= M2.Format.LichKing)
+                LifespanVary = stream.ReadSingle();
             EmissionRate.Load(stream, version);
-            if (version >= M2.Format.LichKing) EmissionRateVary = stream.ReadSingle();
+            if (version >= M2.Format.LichKing)
+                EmissionRateVary = stream.ReadSingle();
             EmissionAreaLength.Load(stream, version);
             EmissionAreaWidth.Load(stream, version);
             ZSource.Load(stream, version);
@@ -133,20 +135,36 @@ namespace M2Lib.m2
             else
             {
                 var midPoint = stream.ReadSingle();
-                var colorTrack = new[] { stream.ReadCArgb(), stream.ReadCArgb(), stream.ReadCArgb() };
-                var scaleTrack = new[] { stream.ReadSingle(), stream.ReadSingle(), stream.ReadSingle() };
+                var colorTrack = new[]
+                {
+                    stream.ReadCArgb(),
+                    stream.ReadCArgb(),
+                    stream.ReadCArgb(),
+                };
+                var scaleTrack = new[]
+                {
+                    stream.ReadSingle(),
+                    stream.ReadSingle(),
+                    stream.ReadSingle(),
+                };
                 var headCellTrack1 = new[] { stream.ReadUInt16(), stream.ReadUInt16() };
-                stream.ReadInt16();//Always 1
+                stream.ReadInt16(); //Always 1
                 var headCellTrack2 = new[] { stream.ReadUInt16(), stream.ReadUInt16() };
-                stream.ReadInt16();//Always 1
+                stream.ReadInt16(); //Always 1
                 for (var i = 0; i < LegacyTiles.Length; i++)
                     LegacyTiles[i] = stream.ReadInt16(); //TODO 4 tailCellTrack ?
                 ColorTrack.Timestamps.Add(0);
-                ColorTrack.Values.Add(new C3Vector(colorTrack[0].B, colorTrack[0].G, colorTrack[0].R));
+                ColorTrack.Values.Add(
+                    new C3Vector(colorTrack[0].B, colorTrack[0].G, colorTrack[0].R)
+                );
                 ColorTrack.Timestamps.Add((short)(midPoint * short.MaxValue));
-                ColorTrack.Values.Add(new C3Vector(colorTrack[1].B, colorTrack[1].G, colorTrack[1].R));
+                ColorTrack.Values.Add(
+                    new C3Vector(colorTrack[1].B, colorTrack[1].G, colorTrack[1].R)
+                );
                 ColorTrack.Timestamps.Add(short.MaxValue);
-                ColorTrack.Values.Add(new C3Vector(colorTrack[2].B, colorTrack[2].G, colorTrack[2].R));
+                ColorTrack.Values.Add(
+                    new C3Vector(colorTrack[2].B, colorTrack[2].G, colorTrack[2].R)
+                );
 
                 AlphaTrack.Timestamps.Add(0);
                 AlphaTrack.Values.Add(new FixedPoint_0_15((short)(128 * colorTrack[0].A)));
@@ -191,13 +209,15 @@ namespace M2Lib.m2
             else
             {
                 var rotation = stream.ReadSingle();
-                for (var i = 0; i < LegacyManyFloats.Length; i++) LegacyManyFloats[i] = stream.ReadSingle();//LegacyManyFloats
-                BaseSpin = rotation;//TODO maybe not be right. Also, the other floats may fit BaseSpinVary, Spin and SpinVary
+                for (var i = 0; i < LegacyManyFloats.Length; i++)
+                    LegacyManyFloats[i] = stream.ReadSingle(); //LegacyManyFloats
+                BaseSpin = rotation; //TODO maybe not be right. Also, the other floats may fit BaseSpinVary, Spin and SpinVary
             }
             FollowParams = stream.ReadC4Vector();
             UnknownReference.Load(stream, version);
             EnabledIn.Load(stream, version);
-            if (version <= M2.Format.LichKing) return;
+            if (version <= M2.Format.LichKing)
+                return;
             for (var i = 0; i < MultiTextureParam0.Length; i++)
                 MultiTextureParam0[i] = stream.ReadFixedPoint_6_9();
             for (var i = 0; i < MultiTextureParam1.Length; i++)
@@ -207,8 +227,10 @@ namespace M2Lib.m2
         public void Save(BinaryWriter stream, M2.Format version)
         {
             stream.Write(Unknown);
-            if (version < M2.Format.LichKing) stream.Write(Flags & 0xFFFF);
-            else stream.Write(Flags);
+            if (version < M2.Format.LichKing)
+                stream.Write(Flags & 0xFFFF);
+            else
+                stream.Write(Flags);
             stream.Write(Position);
             stream.Write(Bone);
             stream.Write(Texture);
@@ -244,9 +266,11 @@ namespace M2Lib.m2
             HorizontalRange.Save(stream, version);
             Gravity.Save(stream, version);
             Lifespan.Save(stream, version);
-            if (version >= M2.Format.LichKing) stream.Write(LifespanVary);
+            if (version >= M2.Format.LichKing)
+                stream.Write(LifespanVary);
             EmissionRate.Save(stream, version);
-            if (version >= M2.Format.LichKing) stream.Write(EmissionRateVary);
+            if (version >= M2.Format.LichKing)
+                stream.Write(EmissionRateVary);
             EmissionAreaLength.Save(stream, version);
             EmissionAreaWidth.Save(stream, version);
             ZSource.Save(stream, version);
@@ -273,8 +297,16 @@ namespace M2Lib.m2
                     for (var i = 0; i < colorTrack.Length; i++)
                     {
                         var color = ColorTrack.Values[i];
-                        var alpha = AlphaTrack.Values.Count >= 3 ? AlphaTrack.Values[i] : new FixedPoint_0_15(short.MaxValue);
-                        colorTrack[i] = new CArgb((byte)color.Z, (byte)color.Y, (byte)color.X, (byte)(alpha.ToShort() / 128));
+                        var alpha =
+                            AlphaTrack.Values.Count >= 3
+                                ? AlphaTrack.Values[i]
+                                : new FixedPoint_0_15(short.MaxValue);
+                        colorTrack[i] = new CArgb(
+                            (byte)color.Z,
+                            (byte)color.Y,
+                            (byte)color.X,
+                            (byte)(alpha.ToShort() / 128)
+                        );
                     }
                 }
                 if (HeadCellTrack.Values.Count >= 4)
@@ -318,9 +350,10 @@ namespace M2Lib.m2
             }
             else
             {
-                var rotation = BaseSpin;//TODO maybe not be right. Also, the other floats may fit BaseSpinVary, Spin and SpinVary
+                var rotation = BaseSpin; //TODO maybe not be right. Also, the other floats may fit BaseSpinVary, Spin and SpinVary
                 stream.Write(rotation);
-                for (var i = 0; i < LegacyManyFloats.Length; i++) stream.Write(LegacyManyFloats[i]);//LegacyManyFloats
+                for (var i = 0; i < LegacyManyFloats.Length; i++)
+                    stream.Write(LegacyManyFloats[i]); //LegacyManyFloats
             }
             stream.Write(FollowParams);
             UnknownReference.Save(stream, version);
@@ -330,7 +363,8 @@ namespace M2Lib.m2
                 EnabledIn.Values.Add(new M2Array<bool> { true });
             }
             EnabledIn.Save(stream, version);
-            if (version <= M2.Format.LichKing) return;
+            if (version <= M2.Format.LichKing)
+                return;
             foreach (var item in MultiTextureParam0)
                 stream.Write(item);
             foreach (var item in MultiTextureParam1)

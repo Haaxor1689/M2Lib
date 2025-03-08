@@ -15,7 +15,7 @@ namespace M2Lib.m2
             Mod2X = 4,
             Fade = 5,
             DeeprunTram = 6,
-            Unknown = 7
+            Unknown = 7,
         }
 
         [Flags]
@@ -29,7 +29,7 @@ namespace M2Lib.m2
             ShadowBatchRelated1 = 0x40,
             ShadowBatchRelated2 = 0x80,
             Unknown = 0x400,
-            DisableAlpha = 0x800
+            DisableAlpha = 0x800,
         }
 
         public RenderFlags Flags { get; set; }

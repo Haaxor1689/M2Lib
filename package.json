@@ -1,0 +1,20 @@
+{
+  "name": "m2lib",
+  "version": "1.0.0",
+  "description": "World of Warcraft M2 library - C#;",
+  "main": "index.js",
+  "scripts": {
+    "dev": "dotnet run --project M2Converter",
+    "format": "dotnet csharpier ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haaxor1689/M2Lib.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Haaxor1689/M2Lib/issues"
+  },
+  "homepage": "https://github.com/Haaxor1689/M2Lib#readme"
+}

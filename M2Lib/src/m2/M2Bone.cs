@@ -20,7 +20,7 @@ namespace M2Lib.m2
             CylindricalBillboardLockZ = 0x40,
             Transformed = 0x200,
             KinematicBone = 0x400, // MoP+: allow physics to influence this bone
-            HelmetAnimScaled = 0x1000 // set blend_modificator to helmetAnimScalingRec.m_amount for this bone
+            HelmetAnimScaled = 0x1000, // set blend_modificator to helmetAnimScalingRec.m_amount for this bone
         }
 
         private M2Track<M2CompQuat> _compressedRotation;
@@ -31,7 +31,8 @@ namespace M2Lib.m2
         public short ParentBone { get; set; } = -1;
         public ushort SubmeshId { get; set; }
         public M2Track<C3Vector> Translation { get; set; } = new M2Track<C3Vector>();
-        public M2Track<C4Quaternion> Rotation { get; set; } = new M2Track<C4Quaternion>(new C4Quaternion(0, 0, 0, 1));
+        public M2Track<C4Quaternion> Rotation { get; set; } =
+            new M2Track<C4Quaternion>(new C4Quaternion(0, 0, 0, 1));
         public M2Track<C3Vector> Scale { get; set; } = new M2Track<C3Vector>(new C3Vector(1, 1, 1));
         public C3Vector Pivot { get; set; }
 
@@ -50,7 +51,9 @@ namespace M2Lib.m2
             Translation.Load(stream, version);
             if (version > M2.Format.Classic)
             {
-                _compressedRotation = new M2Track<M2CompQuat>(new M2CompQuat(32767, 32767, 32767, -1));
+                _compressedRotation = new M2Track<M2CompQuat>(
+                    new M2CompQuat(32767, 32767, 32767, -1)
+                );
                 _compressedRotation.Sequences = Rotation.Sequences;
                 _compressedRotation.Load(stream, version);
             }
@@ -75,7 +78,9 @@ namespace M2Lib.m2
             Translation.Save(stream, version);
             if (version > M2.Format.Classic)
             {
-                _compressedRotation = new M2Track<M2CompQuat>(new M2CompQuat(32767, 32767, 32767, -1));
+                _compressedRotation = new M2Track<M2CompQuat>(
+                    new M2CompQuat(32767, 32767, 32767, -1)
+                );
                 _compressedRotation.Sequences = Rotation.Sequences;
                 Rotation.Compress(_compressedRotation);
                 _compressedRotation.Save(stream, version);
@@ -132,22 +137,24 @@ namespace M2Lib.m2
 
         public override string ToString()
         {
-            return $"KeyBoneId: {KeyBoneId}, Flags: {Flags}, ParentBone: {ParentBone}, SubmeshId: {SubmeshId}" +
-                   $"\nTranslation: {Translation}, " +
-                   $"\nRotation: {Rotation}, \n" +
-                   $"\nScale: {Scale}, " +
-                   $"\nPivot: {Pivot}";
+            return $"KeyBoneId: {KeyBoneId}, Flags: {Flags}, ParentBone: {ParentBone}, SubmeshId: {SubmeshId}"
+                + $"\nTranslation: {Translation}, "
+                + $"\nRotation: {Rotation}, \n"
+                + $"\nScale: {Scale}, "
+                + $"\nPivot: {Pivot}";
         }
 
         public static M2Array<short> GenerateKeyBoneLookup(M2Array<M2Bone> bones)
         {
             var lookup = new M2Array<short>();
             var maxId = (int)bones.Max(x => x.KeyBoneId);
-            for (short i = 0; i < maxId + 1; i++) lookup.Add(-1);
+            for (short i = 0; i < maxId + 1; i++)
+                lookup.Add(-1);
             for (short i = 0; i < bones.Count; i++)
             {
                 var id = (int)bones[i].KeyBoneId;
-                if (id >= 0 && lookup[id] == -1) lookup[id] = i;
+                if (id >= 0 && lookup[id] == -1)
+                    lookup[id] = i;
             }
             return lookup;
         }
@@ -189,7 +196,7 @@ namespace M2Lib.m2
             Wheel5,
             Wheel6,
             Wheel7,
-            Wheel8
+            Wheel8,
         }
     }
 }

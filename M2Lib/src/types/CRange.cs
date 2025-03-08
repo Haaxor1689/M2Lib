@@ -5,7 +5,8 @@
     /// </summary>
     public struct CRange
     {
-        public readonly float Min, Max;
+        public readonly float Min,
+            Max;
 
         public CRange(float p1, float p2)
         {

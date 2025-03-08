@@ -48,7 +48,8 @@ namespace M2Lib.m2
                     OpCount = 1;
                     Flags = 16;
                 }
-                if (ShaderId > 50) ShaderId = 1;
+                if (ShaderId > 50)
+                    ShaderId = 1;
             }
             stream.Write(Flags);
             stream.Write(Flags2);

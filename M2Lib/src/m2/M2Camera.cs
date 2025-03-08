@@ -13,7 +13,7 @@ namespace M2Lib.m2
         {
             Portrait = 0,
             CharacterInfo = 1,
-            UserInterface = -1
+            UserInterface = -1,
         }
 
         public CameraType Type { get; set; } = CameraType.UserInterface;
@@ -32,7 +32,7 @@ namespace M2Lib.m2
             if (version < (M2.Format)271)
             {
                 FieldOfView.Timestamps.Add(new M2Array<uint> { 0 });
-                FieldOfView.Values.Add(new M2Array<C3Vector> { new C3Vector(stream.ReadSingle(), 0, 0) });
+                FieldOfView.Values.Add(new M2Array<C3Vector> { new(stream.ReadSingle(), 0, 0) });
             }
             FarClip = stream.ReadSingle();
             NearClip = stream.ReadSingle();
@@ -41,7 +41,8 @@ namespace M2Lib.m2
             TargetPositions.Load(stream, version);
             TargetPositionBase = stream.ReadC3Vector();
             Roll.Load(stream, version);
-            if (version >= (M2.Format)271) FieldOfView.Load(stream, version);
+            if (version >= (M2.Format)271)
+                FieldOfView.Load(stream, version);
         }
 
         public void Save(BinaryWriter stream, M2.Format version)
@@ -49,8 +50,10 @@ namespace M2Lib.m2
             stream.Write((int)Type);
             if (version < (M2.Format)271)
             {
-                if (FieldOfView.Values.Count == 1) stream.Write(FieldOfView.Values[0][0].X);
-                else stream.Write(Type == CameraType.Portrait ? 0.7F : 0.97F);
+                if (FieldOfView.Values.Count == 1)
+                    stream.Write(FieldOfView.Values[0][0].X);
+                else
+                    stream.Write(Type == CameraType.Portrait ? 0.7F : 0.97F);
             }
             stream.Write(FarClip);
             stream.Write(NearClip);
@@ -59,7 +62,8 @@ namespace M2Lib.m2
             TargetPositions.Save(stream, version);
             stream.Write(TargetPositionBase);
             Roll.Save(stream, version);
-            if (version >= (M2.Format)271) FieldOfView.Save(stream, version);
+            if (version >= (M2.Format)271)
+                FieldOfView.Save(stream, version);
         }
 
         public override string ToString()
@@ -72,7 +76,8 @@ namespace M2Lib.m2
             Positions.LoadContent(stream, version);
             TargetPositions.LoadContent(stream, version);
             Roll.LoadContent(stream, version);
-            if (version >= (M2.Format)271) FieldOfView.LoadContent(stream, version);
+            if (version >= (M2.Format)271)
+                FieldOfView.LoadContent(stream, version);
         }
 
         public void SaveContent(BinaryWriter stream, M2.Format version)
@@ -80,7 +85,8 @@ namespace M2Lib.m2
             Positions.SaveContent(stream, version);
             TargetPositions.SaveContent(stream, version);
             Roll.SaveContent(stream, version);
-            if (version >= (M2.Format)271) FieldOfView.SaveContent(stream, version);
+            if (version >= (M2.Format)271)
+                FieldOfView.SaveContent(stream, version);
         }
 
         public void SetSequences(IReadOnlyList<M2Sequence> sequences)
@@ -94,18 +100,21 @@ namespace M2Lib.m2
         public static M2Array<short> GenerateLookup(M2Array<M2Camera> cameras)
         {
             var lookup = new M2Array<short>();
-            if (cameras.Count == 0) return lookup;
+            if (cameras.Count == 0)
+                return lookup;
             var maxId = (short)cameras.Max(x => x.Type);
             if (maxId == -1)
             {
                 lookup.Add(-1);
                 return lookup;
             }
-            for (short i = 0; i <= maxId; i++) lookup.Add(-1);
+            for (short i = 0; i <= maxId; i++)
+                lookup.Add(-1);
             for (short i = 0; i < cameras.Count; i++)
             {
                 var id = (short)cameras[i].Type;
-                if (id >= 0 && lookup[id] == -1) lookup[id] = i;
+                if (id >= 0 && lookup[id] == -1)
+                    lookup[id] = i;
             }
             return lookup;
         }

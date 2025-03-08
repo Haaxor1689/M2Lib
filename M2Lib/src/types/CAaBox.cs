@@ -5,7 +5,8 @@
     /// </summary>
     public struct CAaBox
     {
-        public readonly C3Vector Min, Max;
+        public readonly C3Vector Min,
+            Max;
 
         public CAaBox(C3Vector min, C3Vector max)
         {

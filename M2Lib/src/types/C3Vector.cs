@@ -7,7 +7,9 @@ namespace M2Lib.types
     /// </summary>
     public struct C3Vector : IEquatable<C3Vector>
     {
-        public readonly float X, Y, Z;
+        public readonly float X,
+            Y,
+            Z;
 
         public C3Vector(float p1, float p2, float p3)
         {
@@ -44,9 +46,7 @@ namespace M2Lib.types
 
         public bool Equals(C3Vector other)
         {
-            return X.Equals(other.X)
-                   && Y.Equals(other.Y)
-                   && Z.Equals(other.Z);
+            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
         }
 
         public override string ToString()

@@ -7,7 +7,8 @@ namespace M2Lib.m2
 {
     public class M2TextureWeight : IAnimated
     {
-        public M2Track<FixedPoint_0_15> Weight { get; set; } = new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
+        public M2Track<FixedPoint_0_15> Weight { get; set; } =
+            new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
 
         public void Load(BinaryReader stream, M2.Format version)
         {
