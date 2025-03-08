@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text;
+﻿using System.Text;
 using M2Lib.interfaces;
 
 namespace M2Lib.m2
@@ -7,8 +6,8 @@ namespace M2Lib.m2
     public class M2FakeTrack<T> : IReferencer
         where T : new()
     {
-        public readonly M2Array<short> Timestamps = new();
-        public readonly M2Array<T> Values = new();
+        public readonly M2Array<short> Timestamps = [];
+        public readonly M2Array<T> Values = [];
 
         public void Load(BinaryReader stream, M2.Format version)
         {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 
 namespace M2Lib.m2
 {
@@ -37,7 +34,7 @@ namespace M2Lib.m2
             GuildEmblem = 18,
         }
 
-        private readonly M2Array<byte> _name = new();
+        private readonly M2Array<byte> _name = [];
         public TextureType Type { get; set; } = TextureType.MonsterSkin1;
         public TextureFlags Flags { get; set; }
 

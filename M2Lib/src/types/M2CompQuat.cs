@@ -3,7 +3,7 @@
     /// <summary>
     ///     A four shorts (compressed) quaternion.
     /// </summary>
-    public struct M2CompQuat
+    public readonly struct M2CompQuat
     {
         public readonly short X,
             Y,

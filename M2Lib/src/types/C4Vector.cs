@@ -3,7 +3,7 @@
     /// <summary>
     ///     A four component float vector.
     /// </summary>
-    public struct C4Vector
+    public readonly struct C4Vector
     {
         public readonly float W,
             X,

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace M2Lib.types
 {
     /// <summary>
     ///     A two component float vector.
     /// </summary>
-    public struct C2Vector : IEquatable<C2Vector>
+    public readonly struct C2Vector : IEquatable<C2Vector>
     {
         public readonly float X,
             Y;

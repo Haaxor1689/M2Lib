@@ -2,9 +2,9 @@
   "name": "m2lib",
   "version": "1.0.0",
   "description": "World of Warcraft M2 library - C#;",
-  "main": "index.js",
   "scripts": {
     "dev": "dotnet run --project M2Converter",
+    "test": "dotnet test UnitTests/UnitTests.csproj",
     "format": "dotnet csharpier ."
   },
   "repository": {

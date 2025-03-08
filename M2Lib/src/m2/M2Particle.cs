@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 using M2Lib.io;
 using M2Lib.types;
 
@@ -24,8 +22,8 @@ namespace M2Lib.m2
             get { return _childEmitterFileName.ToNameString(); }
             set { _childEmitterFileName.SetString(value); }
         }
-        private readonly M2Array<byte> _modelFileName = new();
-        private readonly M2Array<byte> _childEmitterFileName = new();
+        private readonly M2Array<byte> _modelFileName = [];
+        private readonly M2Array<byte> _childEmitterFileName = [];
 
         public byte BlendingType { get; set; }
         public byte EmitterType { get; set; }
@@ -68,7 +66,7 @@ namespace M2Lib.m2
         public C3Vector Model2Rotation { get; set; }
         public C3Vector ModelTranslation { get; set; }
         public C4Vector FollowParams { get; set; }
-        public M2Array<C3Vector> UnknownReference { get; set; } = new M2Array<C3Vector>();
+        public M2Array<C3Vector> UnknownReference { get; set; } = [];
         public M2Track<bool> EnabledIn { get; set; } = new M2Track<bool>(true);
         public readonly FixedPoint_6_9[] MultiTextureParam0 = new FixedPoint_6_9[4];
         public readonly FixedPoint_6_9[] MultiTextureParam1 = new FixedPoint_6_9[4];
@@ -359,8 +357,8 @@ namespace M2Lib.m2
             UnknownReference.Save(stream, version);
             if (version < M2.Format.LichKing && EnabledIn.Timestamps.Count == 0)
             {
-                EnabledIn.Timestamps.Add(new M2Array<uint> { 0 });
-                EnabledIn.Values.Add(new M2Array<bool> { true });
+                EnabledIn.Timestamps.Add([0]);
+                EnabledIn.Values.Add([true]);
             }
             EnabledIn.Save(stream, version);
             if (version <= M2.Format.LichKing)

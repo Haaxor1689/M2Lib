@@ -3,7 +3,7 @@
     /// <summary>
     ///     A four floats quaternion.
     /// </summary>
-    public struct C4Quaternion
+    public readonly struct C4Quaternion
     {
         public readonly float X,
             Y,

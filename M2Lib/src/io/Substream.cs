@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace M2Lib.io
+﻿namespace M2Lib.io
 {
     /// <summary>
     ///     View a part of a stream. All offsets and lengths will be relative to this part.

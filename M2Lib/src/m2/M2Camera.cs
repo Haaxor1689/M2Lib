@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 using M2Lib.io;
 using M2Lib.types;
 
@@ -31,8 +28,8 @@ namespace M2Lib.m2
             Type = (CameraType)stream.ReadInt32();
             if (version < (M2.Format)271)
             {
-                FieldOfView.Timestamps.Add(new M2Array<uint> { 0 });
-                FieldOfView.Values.Add(new M2Array<C3Vector> { new(stream.ReadSingle(), 0, 0) });
+                FieldOfView.Timestamps.Add([0]);
+                FieldOfView.Values.Add([new(stream.ReadSingle(), 0, 0)]);
             }
             FarClip = stream.ReadSingle();
             NearClip = stream.ReadSingle();

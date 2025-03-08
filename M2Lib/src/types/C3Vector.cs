@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace M2Lib.types
+﻿namespace M2Lib.types
 {
     /// <summary>
     ///     A three component float vector.
     /// </summary>
-    public struct C3Vector : IEquatable<C3Vector>
+    public readonly struct C3Vector : IEquatable<C3Vector>
     {
         public readonly float X,
             Y,

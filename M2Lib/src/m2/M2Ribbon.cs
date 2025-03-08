@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 using M2Lib.io;
 using M2Lib.types;
 
@@ -11,8 +9,8 @@ namespace M2Lib.m2
         public int Unknown1 { get; set; } = -1;
         public uint Bone { get; set; }
         public C3Vector Position { get; set; }
-        public M2Array<ushort> TextureRefs { get; set; } = new M2Array<ushort>();
-        public M2Array<ushort> BlendRefs { get; set; } = new M2Array<ushort>();
+        public M2Array<ushort> TextureRefs { get; set; } = [];
+        public M2Array<ushort> BlendRefs { get; set; } = [];
         public M2Track<C3Vector> Color { get; set; } = new M2Track<C3Vector>(); //TODO check default values here
         public M2Track<FixedPoint_0_15> Opacity { get; set; } =
             new M2Track<FixedPoint_0_15>(new FixedPoint_0_15(0x7FFF));
@@ -69,8 +67,8 @@ namespace M2Lib.m2
             TexSlot.Save(stream, version);
             if (version < M2.Format.LichKing && DataEnabled.Timestamps.Count == 0)
             {
-                DataEnabled.Timestamps.Add(new M2Array<uint> { 0 });
-                DataEnabled.Values.Add(new M2Array<bool> { true });
+                DataEnabled.Timestamps.Add([0]);
+                DataEnabled.Values.Add([true]);
             }
             DataEnabled.Save(stream, version);
             if (version < M2.Format.LichKing)

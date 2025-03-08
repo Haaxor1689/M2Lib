@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using System.Text.Json;
 using M2Lib.m2;
 
 Dictionary<string, int> VersionMap = new()
@@ -27,13 +28,10 @@ var outputOption = new Option<FileInfo>(["-o", "--out", "--output"], "Path to ou
     IsRequired = true,
 };
 
-var targetOption = new Option<String>(
+var targetOption = new Option<string>(
     ["-t", "--target"],
     $"Target version to convert to, possible values:\n - {string.Join(", ", VersionMap.Keys)}"
-)
-{
-    IsRequired = true,
-};
+);
 
 var rootCommand = new RootCommand("M2 Model Converter") { inputOption, outputOption, targetOption };
 
@@ -61,7 +59,21 @@ rootCommand.SetHandler(
                 $"Converted to version \"{VersionMap.First(v => v.Value == newVersion).Key ?? "Unknown"}\""
             );
 
+            if (output.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                var jsonString = JsonSerializer.Serialize(model, options);
+                File.WriteAllText(output.FullName, jsonString);
+            }
+            else
+            {
+                using var writer = new BinaryWriter(
+                    new FileStream(output.FullName, FileMode.Create)
+                );
+                model.Save(writer);
+            }
             Console.WriteLine($"Saved into \"{output.FullName}\"");
+
             return Task.FromResult(0);
         }
         catch (Exception ex)

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 using M2Lib.io;
 using M2Lib.types;
 
@@ -29,8 +26,8 @@ namespace M2Lib.m2
             stream.Write(Position);
             if (version < M2.Format.LichKing && AnimateAttached.Timestamps.Count == 0)
             {
-                AnimateAttached.Timestamps.Add(new M2Array<uint> { 0 });
-                AnimateAttached.Values.Add(new M2Array<bool> { true });
+                AnimateAttached.Timestamps.Add([0]);
+                AnimateAttached.Values.Add([true]);
             }
             AnimateAttached.Save(stream, version);
         }

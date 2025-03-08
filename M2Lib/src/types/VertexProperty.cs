@@ -2,7 +2,7 @@
 
 namespace M2Lib.types
 {
-    public struct VertexProperty
+    public readonly struct VertexProperty
     {
         public readonly byte[] Properties;
 

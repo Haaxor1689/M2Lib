@@ -3,7 +3,7 @@
     /// <summary>
     ///     An axis aligned box described by the minimum and maximum point.
     /// </summary>
-    public struct CAaBox
+    public readonly struct CAaBox
     {
         public readonly C3Vector Min,
             Max;

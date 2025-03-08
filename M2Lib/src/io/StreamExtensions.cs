@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 using M2Lib.m2;
 using M2Lib.types;
 
@@ -12,10 +9,9 @@ namespace M2Lib.io
     /// </summary>
     public static class StreamExtensions
     {
-        public static readonly Dictionary<Type, Func<BinaryReader, object>> ReadFunctions = new();
+        public static readonly Dictionary<Type, Func<BinaryReader, object>> ReadFunctions = [];
 
-        public static readonly Dictionary<Type, Action<BinaryWriter, object>> WriteFunctions =
-            new();
+        public static readonly Dictionary<Type, Action<BinaryWriter, object>> WriteFunctions = [];
 
         static StreamExtensions()
         {
@@ -150,7 +146,6 @@ namespace M2Lib.io
 
         public static void Write(this BinaryWriter stream, C33Matrix item)
         {
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < item.Columns.Length; i++)
             {
                 stream.Write(item.Columns[i]);
@@ -166,7 +161,6 @@ namespace M2Lib.io
 
         public static void Write(this BinaryWriter stream, C44Matrix item)
         {
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < item.Columns.Length; i++)
             {
                 stream.Write(item.Columns[i]);
@@ -240,7 +234,6 @@ namespace M2Lib.io
 
         public static void Write(this BinaryWriter stream, VertexProperty item)
         {
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < item.Properties.Length; i++)
             {
                 stream.Write(item.Properties[i]);

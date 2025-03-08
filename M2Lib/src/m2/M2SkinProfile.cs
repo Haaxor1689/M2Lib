@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using System.Text;
 using M2Lib.interfaces;
 using M2Lib.types;
@@ -8,13 +7,13 @@ namespace M2Lib.m2
 {
     public class M2SkinProfile : IReferencer
     {
-        public M2Array<ushort> Indices { get; set; } = new M2Array<ushort>();
-        public M2Array<ushort> Triangles { get; set; } = new M2Array<ushort>();
-        public M2Array<VertexProperty> Properties { get; set; } = new M2Array<VertexProperty>();
-        public M2Array<M2SkinSection> Submeshes { get; set; } = new M2Array<M2SkinSection>();
-        public M2Array<M2Batch> TextureUnits { get; set; } = new M2Array<M2Batch>();
+        public M2Array<ushort> Indices { get; set; } = [];
+        public M2Array<ushort> Triangles { get; set; } = [];
+        public M2Array<VertexProperty> Properties { get; set; } = [];
+        public M2Array<M2SkinSection> Submeshes { get; set; } = [];
+        public M2Array<M2Batch> TextureUnits { get; set; } = [];
         public uint Bones { get; set; } = 21;
-        public M2Array<M2ShadowBatch> ShadowBatches { get; set; } = new M2Array<M2ShadowBatch>();
+        public M2Array<M2ShadowBatch> ShadowBatches { get; set; } = [];
 
         public void Load(BinaryReader stream, M2.Format version)
         {

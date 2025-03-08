@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using M2Lib.interfaces;
+﻿using M2Lib.interfaces;
 
 namespace M2Lib.m2
 {

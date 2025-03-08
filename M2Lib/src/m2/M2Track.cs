@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 using M2Lib.interfaces;
 using M2Lib.io;
@@ -39,9 +36,9 @@ namespace M2Lib.m2
 
         public InterpolationTypes InterpolationType { get; set; }
         public short GlobalSequence { get; set; } = -1;
-        public M2Array<M2Array<uint>> Timestamps { get; } = new M2Array<M2Array<uint>>();
+        public M2Array<M2Array<uint>> Timestamps { get; } = [];
 
-        public M2Array<M2Array<T>> Values { get; } = new M2Array<M2Array<T>>();
+        public M2Array<M2Array<T>> Values { get; } = [];
 
         // Used only to read 1 timeline formats and to open correct .anim files when needed.
         // Legacy fields are automatically converted to standard ones in methods.
@@ -59,9 +56,9 @@ namespace M2Lib.m2
             }
             else
             {
-                _legacyRanges = new M2Array<Range>();
-                _legacyTimestamps = new M2Array<uint>();
-                _legacyValues = new M2Array<T>();
+                _legacyRanges = [];
+                _legacyTimestamps = [];
+                _legacyValues = [];
                 LegacyLoad(stream, version);
             }
         }
@@ -78,9 +75,9 @@ namespace M2Lib.m2
             }
             else
             {
-                _legacyRanges = new M2Array<Range>();
-                _legacyTimestamps = new M2Array<uint>();
-                _legacyValues = new M2Array<T>();
+                _legacyRanges = [];
+                _legacyTimestamps = [];
+                _legacyValues = [];
                 LegacySave(stream, version);
             }
         }
@@ -270,7 +267,6 @@ namespace M2Lib.m2
         {
             if (_legacyTimestamps.Count < 2)
                 return;
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (var index = 0; index < Sequences.Count; index++)
             {
                 var seq = Sequences[index];
@@ -323,7 +319,6 @@ namespace M2Lib.m2
             }
             else
             {
-                // ReSharper disable once ForCanBeConvertedToForeach
                 for (var index = 0; index < Sequences.Count; index++)
                 {
                     var animTimes = new M2Array<uint>();

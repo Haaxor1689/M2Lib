@@ -3,7 +3,7 @@
     /// <summary>
     ///     A color given in values of red, green, blue and alpha.
     /// </summary>
-    public struct CArgb
+    public readonly struct CArgb
     {
         public readonly byte R,
             G,

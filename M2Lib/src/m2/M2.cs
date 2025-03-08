@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using M2Lib.interfaces;
 using M2Lib.io;
 using M2Lib.types;
@@ -41,7 +37,7 @@ namespace M2Lib.m2
             CameraRelated = 0x0100,
         }
 
-        private readonly M2Array<byte> _name = new();
+        private readonly M2Array<byte> _name = [];
 
         public Format Version { get; set; } = Format.Draenor;
 
@@ -52,39 +48,38 @@ namespace M2Lib.m2
         }
 
         public GlobalFlags GlobalModelFlags { get; set; } = 0;
-        public M2Array<int> GlobalSequences { get; } = new M2Array<int>();
-        public M2Array<M2Sequence> Sequences { get; } = new M2Array<M2Sequence>();
-        public M2Array<M2Bone> Bones { get; } = new M2Array<M2Bone>();
-        public M2Array<M2Vertex> GlobalVertexList { get; } = new M2Array<M2Vertex>();
-        public M2Array<M2SkinProfile> Views { get; } = new M2Array<M2SkinProfile>();
-        public M2Array<M2Color> Colors { get; } = new M2Array<M2Color>();
-        public M2Array<M2Texture> Textures { get; } = new M2Array<M2Texture>();
-        public M2Array<M2TextureWeight> Transparencies { get; } = new M2Array<M2TextureWeight>();
-        public M2Array<M2TextureTransform> TextureTransforms { get; } =
-            new M2Array<M2TextureTransform>();
-        public M2Array<M2Material> Materials { get; } = new M2Array<M2Material>();
-        public M2Array<M2Attachment> Attachments { get; } = new M2Array<M2Attachment>();
-        public M2Array<M2Event> Events { get; } = new M2Array<M2Event>();
-        public M2Array<M2Light> Lights { get; } = new M2Array<M2Light>();
-        public M2Array<M2Camera> Cameras { get; } = new M2Array<M2Camera>();
+        public M2Array<int> GlobalSequences { get; } = [];
+        public M2Array<M2Sequence> Sequences { get; } = [];
+        public M2Array<M2Bone> Bones { get; } = [];
+        public M2Array<M2Vertex> GlobalVertexList { get; } = [];
+        public M2Array<M2SkinProfile> Views { get; } = [];
+        public M2Array<M2Color> Colors { get; } = [];
+        public M2Array<M2Texture> Textures { get; } = [];
+        public M2Array<M2TextureWeight> Transparencies { get; } = [];
+        public M2Array<M2TextureTransform> TextureTransforms { get; } = [];
+        public M2Array<M2Material> Materials { get; } = [];
+        public M2Array<M2Attachment> Attachments { get; } = [];
+        public M2Array<M2Event> Events { get; } = [];
+        public M2Array<M2Light> Lights { get; } = [];
+        public M2Array<M2Camera> Cameras { get; } = [];
 
         //Data referenced by Views. TODO See if can be generated on the fly.
-        public M2Array<short> BoneLookup { get; } = new M2Array<short>();
-        public M2Array<short> TexLookup { get; } = new M2Array<short>();
-        public M2Array<short> TexUnitLookup { get; } = new M2Array<short>();
-        public M2Array<short> TransLookup { get; } = new M2Array<short>();
-        public M2Array<short> UvAnimLookup { get; } = new M2Array<short>();
+        public M2Array<short> BoneLookup { get; } = [];
+        public M2Array<short> TexLookup { get; } = [];
+        public M2Array<short> TexUnitLookup { get; } = [];
+        public M2Array<short> TransLookup { get; } = [];
+        public M2Array<short> UvAnimLookup { get; } = [];
 
         public CAaBox BoundingBox { get; set; }
         public float BoundingSphereRadius { get; set; }
         public CAaBox CollisionBox { get; set; }
         public float CollisionSphereRadius { get; set; }
-        public M2Array<ushort> CollisionTriangles { get; } = new M2Array<ushort>();
-        public M2Array<C3Vector> CollisionVertices { get; } = new M2Array<C3Vector>();
-        public M2Array<C3Vector> CollisionNormals { get; } = new M2Array<C3Vector>();
-        public M2Array<M2Ribbon> Ribbons { get; } = new M2Array<M2Ribbon>();
-        public M2Array<M2Particle> Particles { get; } = new M2Array<M2Particle>();
-        public M2Array<ushort> BlendingMaps { get; } = new M2Array<ushort>();
+        public M2Array<ushort> CollisionTriangles { get; } = [];
+        public M2Array<C3Vector> CollisionVertices { get; } = [];
+        public M2Array<C3Vector> CollisionNormals { get; } = [];
+        public M2Array<M2Ribbon> Ribbons { get; } = [];
+        public M2Array<M2Particle> Particles { get; } = [];
+        public M2Array<ushort> BlendingMaps { get; } = [];
 
         public void Load(BinaryReader stream, Format version = Format.Useless)
         {

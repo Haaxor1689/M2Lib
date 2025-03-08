@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Text;
 
 namespace M2Lib.types
 {
-    // ReSharper disable once InconsistentNaming
-    public struct FixedPoint_0_15
+    public readonly struct FixedPoint_0_15
     {
-        public float Value => _bits.ToFloat(0, 15);
+        public float Value => _bits?.ToFloat(0, 15) ?? float.NaN;
         private readonly BitArray _bits;
 
         public FixedPoint_0_15(short p1)
         {
-            _bits = new BitArray(BitConverter.GetBytes((short)p1));
+            _bits = new BitArray(BitConverter.GetBytes(p1));
         }
 
         public FixedPoint_0_15(BitArray bits)
@@ -23,15 +21,14 @@ namespace M2Lib.types
         public short ToShort() => _bits.ToShort();
     }
 
-    // ReSharper disable once InconsistentNaming
-    public struct FixedPoint_6_9
+    public readonly struct FixedPoint_6_9
     {
-        public float Value => _bits.ToFloat(6, 9);
+        public float Value => _bits?.ToFloat(6, 9) ?? float.NaN;
         private readonly BitArray _bits;
 
         public FixedPoint_6_9(short p1)
         {
-            _bits = new BitArray(BitConverter.GetBytes((short)p1));
+            _bits = new BitArray(BitConverter.GetBytes(p1));
         }
 
         public FixedPoint_6_9(BitArray bits)
@@ -42,10 +39,9 @@ namespace M2Lib.types
         public short ToShort() => _bits.ToShort();
     }
 
-    // ReSharper disable once InconsistentNaming
-    public struct FixedPoint_2_5
+    public readonly struct FixedPoint_2_5
     {
-        public float Value => _bits.ToFloat(2, 5);
+        public float Value => _bits?.ToFloat(2, 5) ?? float.NaN;
         private readonly BitArray _bits;
 
         public FixedPoint_2_5(byte p1)
@@ -125,7 +121,7 @@ namespace M2Lib.types
         {
             CheckRange(bits, fromIndex, toIndex);
             var len = bits.Count;
-            // If no set bits in range return empty bitarray
+            // If no set bits in range return empty BitArray
             if (len <= fromIndex || fromIndex == toIndex)
                 return new BitArray(0);
             // An optimization

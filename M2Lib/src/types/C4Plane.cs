@@ -3,7 +3,7 @@
     /// <summary>
     ///     A 3D plane defined by four floats
     /// </summary>
-    public struct C4Plane
+    public readonly struct C4Plane
     {
         public readonly float Distance;
         public readonly C3Vector Normal;

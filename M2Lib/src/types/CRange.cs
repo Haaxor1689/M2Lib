@@ -3,7 +3,7 @@
     /// <summary>
     ///     A one dimensional range defined by the bounds.
     /// </summary>
-    public struct CRange
+    public readonly struct CRange
     {
         public readonly float Min,
             Max;

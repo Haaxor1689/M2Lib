@@ -3,7 +3,7 @@
     /// <summary>
     ///     An axis aligned sphere described by position and radius.
     /// </summary>
-    public struct CAaSphere
+    public readonly struct CAaSphere
     {
         public readonly C3Vector Position;
         public readonly float Radius;

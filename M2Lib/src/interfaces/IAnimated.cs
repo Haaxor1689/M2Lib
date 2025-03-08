@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using M2Lib.m2;
+﻿using M2Lib.m2;
 
 namespace M2Lib.interfaces
 {

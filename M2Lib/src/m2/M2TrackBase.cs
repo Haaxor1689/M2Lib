@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 using M2Lib.interfaces;
 
@@ -22,7 +19,7 @@ namespace M2Lib.m2
 
         public InterpolationTypes InterpolationType { get; set; }
         public short GlobalSequence { get; set; } = -1;
-        public M2Array<M2Array<uint>> Timestamps { get; } = new M2Array<M2Array<uint>>();
+        public M2Array<M2Array<uint>> Timestamps { get; } = [];
 
         // Used only to read 1 timeline formats and to open correct .anim files when needed.
         // Legacy fields are automatically converted to standard ones in methods.
@@ -39,8 +36,8 @@ namespace M2Lib.m2
             }
             else
             {
-                _legacyRanges = new M2Array<Range>();
-                _legacyTimestamps = new M2Array<uint>();
+                _legacyRanges = [];
+                _legacyTimestamps = [];
                 LegacyLoad(stream, version);
             }
         }
@@ -56,8 +53,8 @@ namespace M2Lib.m2
             }
             else
             {
-                _legacyRanges = new M2Array<Range>();
-                _legacyTimestamps = new M2Array<uint>();
+                _legacyRanges = [];
+                _legacyTimestamps = [];
                 LegacySave(stream, version);
             }
         }
@@ -199,7 +196,6 @@ namespace M2Lib.m2
         /// </summary>
         private void GenerateLegacyRanges()
         {
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (var index = 0; index < Sequences.Count; index++)
             {
                 if (_legacyTimestamps.Count < 2)
@@ -254,7 +250,6 @@ namespace M2Lib.m2
             }
             else
             {
-                // ReSharper disable once ForCanBeConvertedToForeach
                 for (var index = 0; index < Sequences.Count; index++)
                 {
                     var seq = Sequences[index];
