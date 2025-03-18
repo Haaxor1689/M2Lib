@@ -6,13 +6,19 @@ namespace UnitTests
     [TestClass]
     public class M2Tests
     {
+        [TestInitialize]
+        public void Init()
+        {
+            TestUtils.Init();
+        }
+
         [TestMethod]
         public void SaveLoadWotlk()
         {
             var origModel = TestUtils.LoadModel("GnomePounder.m2");
-            TestUtils.SaveModel("GnomePounder-saved.m2", origModel);
-            var savedModel = TestUtils.LoadModel("GnomePounder-saved.m2");
-            savedModel.Version = M2Lib.m2.M2.Format.Cataclysm;
+            TestUtils.SaveModel("tmp/GnomePounder-saved.m2", origModel);
+            TestUtils.SaveJson("GnomePounder-saved.json", origModel);
+            var savedModel = TestUtils.LoadModel("tmp/GnomePounder-saved.m2");
 
             TestUtils.AssertDeepEqual("SaveLoadWotlk", origModel, savedModel);
         }
@@ -21,8 +27,8 @@ namespace UnitTests
         public void SaveLoadVanilla()
         {
             var origModel = TestUtils.LoadModel("GnomePounder-vanilla.m2");
-            TestUtils.SaveModel("GnomePounder-vanilla-saved.m2", origModel);
-            var savedModel = TestUtils.LoadModel("GnomePounder-vanilla-saved.m2");
+            TestUtils.SaveModel("tmp/GnomePounder-vanilla-saved.m2", origModel);
+            var savedModel = TestUtils.LoadModel("tmp/GnomePounder-vanilla-saved.m2");
 
             TestUtils.AssertDeepEqual("SaveLoadVanilla", origModel, savedModel);
         }
@@ -32,8 +38,8 @@ namespace UnitTests
         {
             var origModel = TestUtils.LoadModel("GnomePounder.m2");
             origModel.Version = M2.Format.Classic;
-            TestUtils.SaveModel("GnomePounder-converted.m2", origModel);
-            var convertedModel = TestUtils.LoadModel("GnomePounder-converted.m2");
+            TestUtils.SaveModel("tmp/GnomePounder-converted.m2", origModel);
+            var convertedModel = TestUtils.LoadModel("tmp/GnomePounder-converted.m2");
             var targetModel = TestUtils.LoadModel("GnomePounder-vanilla.m2");
 
             TestUtils.AssertDeepEqual("WotlkToVanilla", convertedModel, targetModel);
@@ -42,16 +48,7 @@ namespace UnitTests
         [TestCleanup]
         public void Cleanup()
         {
-            TestUtils.CleanupFiles(
-                [
-                    "GnomePounder-saved.m2",
-                    "GnomePounder-saved00.skin",
-                    "GnomePounder-saved01.skin",
-                    "GnomePounder-saved02.skin",
-                    "GnomePounder-vanilla-saved.m2",
-                    "GnomePounder-converted.m2",
-                ]
-            );
+            TestUtils.Cleanup();
         }
     }
 }
